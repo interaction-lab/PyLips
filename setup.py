@@ -96,7 +96,7 @@ setup(
     packages=find_packages(include=["pylips", "pylips.*"]),
     python_requires=">=3.8.0",
     test_suite="tests",
-    url="pylips.readthedocs.io",
+    # url="pylips.readthedocs.io",
     version="0.0.1",
     zip_safe=False,
 )
