@@ -1,7 +1,7 @@
 Usage
 =====
 
-.. _installation:
+.. _install:
 
 Installation
 ------------
@@ -10,9 +10,9 @@ To use Lumache, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   (.venv) $ python3 -m pip install pylips
 
-Creating recipes
+Starting the Face
 ----------------
 
 To retrieve a list of random ingredients,
