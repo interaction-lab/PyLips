@@ -9,12 +9,10 @@ if __name__ == '__main__':
     while True:
         message = input("who will we make talk?: ")
         if message == 'nathan':
-            nathan.update_face({'pupil_scale': .4})
-            nathan.express({'AU1':.5, 'AU4l': 0.5}, 1000)
-            nathan.say('It is nice to meet you, I am a robot face')
+            nathan.save_file('Hello, my name is Nathan', 'greeting')
+
             
         if message == 'aimee':
-            nathan.release_gaze()
-            aimee.say('It is nice to meet you, I am a robot face')
-            nathan.stop_speech()
+            nathan.say_file('greeting')
+            aimee.say("Hello, my name is Aimee")
         

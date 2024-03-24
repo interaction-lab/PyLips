@@ -9,18 +9,15 @@ with open("README.md", encoding="utf-8") as readme_file:
 with open("HISTORY.md", encoding="utf-8") as history_file:
     history = history_file.read()
 
-# NOTE: Update pinned_reqs whenever install_requires or extras_require changes.
 install_requires = [
-    # numpy>=1.17.0 is when default_rng becomes available;
-    # scikit-learn 1.1.0 requires numpy 1.17.3+
-    "numpy>=1.17.3",
-    "numpy_groupies>=0.9.16",  # Supports Python 3.7 and up.
-    "numba>=0.51.0",
-    "pandas>=1.0.0",
-    "sortedcontainers>=2.0.0",  # Primarily used in SlidingBoundariesArchive.
-    "scikit-learn>=1.1.0",  # Primarily used in CVTArchive.
-    "scipy>=1.7.0",  # Primarily used in CVTArchive.
-    "threadpoolctl>=3.0.0",
+    #web server
+    "flask>=2.0.1",
+    "flask-socketio>=5.1.1",
+    "python-socketio>=5.11.1",
+    #TTS
+    "boto3>=1.18.67",
+    "pygame>=2.1.1",
+    "py3-tts>=3.5",
 ]
 
 extras_require = {
@@ -67,7 +64,7 @@ setup(
     author="Interaction Lab",
     author_email="dennler@usc.edu",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
@@ -84,7 +81,7 @@ setup(
         "Topic :: Scientific/Engineering :: Human Machine Interfaces",
     ],
     description=
-    "An interface for embodied speech to text.",
+    "An interface for embodied conversational interaction.",
     install_requires=install_requires,
     extras_require=extras_require,
     license="MIT license",
@@ -96,7 +93,7 @@ setup(
     packages=find_packages(include=["pylips", "pylips.*"]),
     python_requires=">=3.8.0",
     test_suite="tests",
-    # url="pylips.readthedocs.io",
-    version="0.0.1",
+    url="https://github.com/interaction-lab/PyLips",
+    version="0.0.3",
     zip_safe=False,
 )

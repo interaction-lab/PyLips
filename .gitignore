@@ -29,3 +29,4 @@ env/
 # Miscellaneous
 .DS_Store
 Thumbs.db
+pylips_phrases/

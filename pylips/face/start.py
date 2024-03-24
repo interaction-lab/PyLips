@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+import sys
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*") #allow communication on the same IP (main use case for this package)
@@ -21,4 +22,5 @@ def handle_message(message):
     emit('face_control', message, broadcast=True)
 
 if __name__ == '__main__':
+    #TODO: add argparse for host and port
     socketio.run(app, host='0.0.0.0', port=8000)
