@@ -78,6 +78,7 @@ function startFace(bkgd_color,
        eye_iris_size,
        eye_pupil_scale,
        eye_shine,
+       eyelid_color,
        eyelid_width,
        eyelid_height,
        eyelid_arch,
@@ -143,7 +144,7 @@ function startFace(bkgd_color,
             eye_shine);
           //
           // addLids(color, width, height, arch)
-          addLids(background_color,
+          addLids(eyelid_color,
             eyelid_width,
             eyelid_height,
             eyelid_arch)
@@ -760,7 +761,7 @@ function addLids(color, width, height, arch){
   //make the shape for an upper lid (basically a big rectunguloid with a u-shaped cutout)
     function makeUpperLidGroup(){
       var curve = two.makeCurve(-1.1*width, -2*width, -1.1*width, -1*width,-1.1*width, 0,-1.1*width, width, -width,width,      -width/2, width/2, width/2, width/2,     width, width, 1.1*width, width,1.1*width, 0, 1.1*width, -1*width, 1.1*width, -2*width)
-      curve.fill = background_color
+      curve.fill = color
       curve.stroke = 'None'
       return two.makeGroup(curve)
     }
@@ -782,9 +783,9 @@ function addLids(color, width, height, arch){
       var curve = two.makeCurve(1.1*width, 2*width, 1.1*width, 1*width,1.1*width, 0,1.1*width, -width, width,-width,    width/2, -width/2, -width/2, -width/2,      -width, -width, -1.1*width, -width,-1.1*width, 0, -1.1*width, 1*width, -1.1*width, 2*width)
       var rect = two.makeRectangle(-0.9*width,-width, width/3, 2*width)
       var rect2 = two.makeRectangle(0.9*width,-width, width/3, 2*width)
-      rect.fill = background_color
-      rect2.fill = background_color
-      curve.fill = background_color
+      rect.fill = color
+      rect2.fill = color
+      curve.fill = color
       curve.stroke = 'None'
       rect.stroke = 'None'
       rect2.stroke = 'None'

@@ -13,6 +13,9 @@ if __name__ == '__main__':
 
             
         if message == 'aimee':
+            nathan.update_face({'eyelid_color': '#D7E4F500'})
+            
             nathan.say_file('greeting')
             aimee.say("Hello, my name is Aimee")
+            
         
