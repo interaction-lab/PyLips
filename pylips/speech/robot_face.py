@@ -7,8 +7,8 @@ import pygame
 import time
 import os
 
-from polly_tts import PollyTTS
-from system_tts import SystemTTS
+from .polly_tts import PollyTTS
+from .system_tts import SystemTTS
 
 class RobotFace:
     def __init__(self,
