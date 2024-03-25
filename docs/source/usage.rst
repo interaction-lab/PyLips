@@ -16,7 +16,7 @@ If you are running PyLips on a Linux Distribution, you may need to also install 
 
 .. code-block:: console
 
-   $ sudo apt update && sudo apt install espeak ffmpeg libespeak1
+   $ sudo apt update && sudo apt install espeak-ng ffmpeg libespeak1
 
 
 PyLips Quickstart

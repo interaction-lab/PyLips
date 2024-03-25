@@ -4,6 +4,8 @@ import soundfile as sf
 import pickle
 import os
 
+from sys import platform
+
 IPA2VISEME = {
     'sil': 'IDLE',
     '': 'IDLE',
@@ -113,8 +115,12 @@ class SystemTTS:
                 return fname, times, visemes
 
         # Synthesize speech
-        self.engine.save_to_file(text, fname)
-        self.engine.runAndWait()
+        if platform == "linux" or platform == "linux2":
+            # linux has issues with saving multiple files...
+            os.system(f"espeak-ng -s 100 '{text}' -w {fname}")
+        else:
+            self.engine.save_to_file(text, fname)
+            self.engine.runAndWait()
 
         data, samplerate = sf.read(fname)
         sf.write(fname, data, samplerate)
