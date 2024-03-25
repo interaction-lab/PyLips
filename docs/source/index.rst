@@ -8,7 +8,7 @@ how to :ref:`install` the project.
 
 .. note::
 
-   This project is under active development.
+   This project is under active development. Please raise an issue on github if you are having any trouble!
 
 Contents
 --------

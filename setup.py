@@ -18,6 +18,7 @@ install_requires = [
     "boto3>=1.18.67",
     "pygame>=2.1.1",
     "py3-tts>=3.5",
+    "allosaurus>=1.0.2"
 ]
 
 extras_require = {
@@ -94,6 +95,6 @@ setup(
     python_requires=">=3.8.0",
     test_suite="tests",
     url="https://github.com/interaction-lab/PyLips",
-    version="0.0.3",
+    version="0.0.4",
     zip_safe=False,
 )

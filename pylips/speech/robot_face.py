@@ -7,18 +7,24 @@ import pygame
 import time
 import os
 
+from polly_tts import PollyTTS
+from system_tts import SystemTTS
+
 class RobotFace:
     def __init__(self,
                  robot_name: str = 'default',
                  server_ip: str = 'http://localhost:8000',
-                 tts_method: str = 'polly',
-                 voice_id: str = 'Justin'):
+                 tts_method: str = 'system',
+                 voice_id: str = None):
         '''
-            The main class for the Web-Enabled Facial Text-to-Speech (WEFacTTS) project.
+            The main class for the PyLips project.
             :param: robot_name - the identity of the robot that should be speaking
             :param: server_ip - the location of the server running the flask application.
         '''
-        
+
+        if os.path.exists('pylips_phrases') == False:
+            os.mkdir('pylips_phrases')
+
         self.name = robot_name
         self.voice_id = voice_id
 
@@ -33,8 +39,10 @@ class RobotFace:
             raise Exception(f'parameter tts_method must be one of {tts_methods}')
         
         # TODO: implement other TTS things, but for now we will use polly
+        if tts_method == 'system':
+            self.tts = SystemTTS()
         if tts_method == 'polly':
-            self.tts = boto3.client('polly')
+            self.tts = PollyTTS()
 
     def say(self, content):
         '''
@@ -43,62 +51,7 @@ class RobotFace:
             :param: content - the text that the robot should speak
         '''
 
-        response = self.tts.synthesize_speech(
-            TextType='ssml',
-            Text=f"<speak>{content}</speak>",
-            OutputFormat='mp3',
-            VoiceId=self.voice_id
-        )
-
-        # Get the audio stream
-        audio_stream = response["AudioStream"]
-
-        # Play the audio stream
-        if not os.path.isdir('pylips_phrases'):
-            os.mkdir('pylips_phrases')
-             
-        with open(f"pylips_phrases/{self.name}_output.mp3", "wb") as file:
-            file.write(audio_stream.read())
-        
-        
-        
-        # Synthesize speech with viseme output
-        response = self.tts.synthesize_speech(
-            TextType='ssml',
-            Text=f"<speak>{content}</speak>",
-            OutputFormat='json',
-            SpeechMarkTypes=['viseme'],
-            VoiceId=self.voice_id
-        )
-
-        # Process the response
-        if 'AudioStream' in response:
-            # Do something with the audio stream if needed
-            with closing(response["AudioStream"]) as stream:
-                        data = stream.read().decode('utf-8')
-                        xSheet = data.split('\n')
-                        xSheet = [json.loads(line) for line in xSheet if line != '']
-        
-        VIS2IPA = {"p": "BILABIAL",
-                "f": "LABIODENTAL",
-                "T": "INTERDENTAL",
-                "s": "DENTAL_ALVEOLAR",
-                "t": "DENTAL_ALVEOLAR",
-                "S": "POSTALVEOLAR",
-                "r": "POSTALVEOLAR",
-                "k": "VELAR_GLOTTAL",
-                "i": "CLOSE_FRONT_VOWEL",
-                "u": "CLOSE_BACK_VOWEL",
-                "@": "MID_CENTRAL_VOWEL",
-                "a": "OPEN_FRONT_VOWEL",
-                "e": "OPEN_FRONT_VOWEL",
-                "E": "OPEN_FRONT_VOWEL",
-                "o": "OPEN_BACK_VOWEL",
-                "O": "OPEN_BACK_VOWEL",
-                "sil": "IDLE"}
-
-        times = [x['time'] / 1000. for x in xSheet]
-        visemes = [VIS2IPA[x['value']] for x in xSheet]
+        fname, times, visemes = self.tts.gen_audio_and_visemes(content, self.voice_id)
 
         request = { 
                 'name': self.name,
@@ -112,9 +65,8 @@ class RobotFace:
         while pygame.mixer.Channel(self.channel).get_busy():
             self.channel += 1
              
-        sound = pygame.mixer.Sound(f"pylips_phrases/{self.name}_output.mp3")
+        sound = pygame.mixer.Sound(fname)
 
-        
         #play sound and face
         self.io.emit('face_control', request)
         pygame.mixer.Channel(self.channel).play(sound)
@@ -122,74 +74,15 @@ class RobotFace:
     def save_file(self, content, filename):
         '''
             The main method for the RobotFace class. This method will take in a string of text and
-            convert it to speech using the AWS Polly service.
+            convert it to speech.
             :param: content - the text that the robot should speak
         '''
-
-        response = self.tts.synthesize_speech(
-            TextType='ssml',
-            Text=f"<speak>{content}</speak>",
-            OutputFormat='mp3',
-            VoiceId=self.voice_id
-        )
-
-        # Get the audio stream
-        audio_stream = response["AudioStream"]
-
-        # Play the audio stream
-        if not os.path.isdir('pylips_phrases'):
-            os.mkdir('pylips_phrases')
-             
-        with open(f"pylips_phrases/{filename}.mp3", "wb") as file:
-            file.write(audio_stream.read())
-        
-        
-        # Synthesize speech with viseme output
-        response = self.tts.synthesize_speech(
-            TextType='ssml',
-            Text=f"<speak>{content}</speak>",
-            OutputFormat='json',
-            SpeechMarkTypes=['viseme'],
-            VoiceId=self.voice_id
-        )
-
-        # Process the response
-        if 'AudioStream' in response:
-            # Do something with the audio stream if needed
-            with closing(response["AudioStream"]) as stream:
-                        data = stream.read().decode('utf-8')
-                        xSheet = data.split('\n')
-                        xSheet = [json.loads(line) for line in xSheet if line != '']
-        
-        VIS2IPA = {"p": "BILABIAL",
-                "f": "LABIODENTAL",
-                "T": "INTERDENTAL",
-                "s": "DENTAL_ALVEOLAR",
-                "t": "DENTAL_ALVEOLAR",
-                "S": "POSTALVEOLAR",
-                "r": "POSTALVEOLAR",
-                "k": "VELAR_GLOTTAL",
-                "i": "CLOSE_FRONT_VOWEL",
-                "u": "CLOSE_BACK_VOWEL",
-                "@": "MID_CENTRAL_VOWEL",
-                "a": "OPEN_FRONT_VOWEL",
-                "e": "OPEN_FRONT_VOWEL",
-                "E": "OPEN_FRONT_VOWEL",
-                "o": "OPEN_BACK_VOWEL",
-                "O": "OPEN_BACK_VOWEL",
-                "sil": "IDLE"}
-
-        times = [x['time'] / 1000. for x in xSheet]
-        visemes = [VIS2IPA[x['value']] for x in xSheet]
-
-        pickle.dump((times, visemes), open(f'pylips_phrases/{filename}.pkl', 'wb'))
+        self.tts.gen_audio_and_visemes(content, self.voice_id, filename)
          
 
     def say_file(self, filename):
-        if not os.path.exists(f'pylips_phrases/{filename}.mp3'):
-             raise Exception(f'phrase {filename} does not exist')
-        
-        times, visemes = pickle.load(open(f'pylips_phrases/{filename}.pkl', 'rb'))
+
+        fname, times, visemes = self.tts.get_audio_and_visemes(filename)
 
         request = { 
                 'name': self.name,
@@ -202,7 +95,7 @@ class RobotFace:
         while pygame.mixer.Channel(self.channel).get_busy():
             self.channel += 1
              
-        sound = pygame.mixer.Sound(f"pylips_phrases/{filename}.mp3")
+        sound = pygame.mixer.Sound(fname)
 
         #play sound and face
         self.io.emit('face_control', request)
