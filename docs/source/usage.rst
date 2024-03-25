@@ -35,7 +35,7 @@ faces at the same time. To start the server, run the following command:
 
 This will start the server on port 8000. Do not worry about the warning message, the package will 
 still work. You can connect any web browser to the urls printed, even across computers on the local network.
-For now, just open a browser and go to `http://localhost:8000/face` to see the face.
+For now, just open a browser and go to ``http://localhost:8000/face`` to see the face.
 
 Now open a new terminal tab and run the following code:
 
