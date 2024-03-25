@@ -44,6 +44,8 @@ Now open a new terminal tab and run the following code:
    from pylips.speech import RobotFace
 
    face = RobotFace()
+   # you may need to wait here for a minute or two to let allosaurus download on the first run
+
    face.say("Hello, welcome to pylips!")
 
 If all goes well, the face should have said the message!
