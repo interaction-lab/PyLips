@@ -98,7 +98,8 @@ class SystemTTS:
         '''
         if voice_id is None:
             voices = self.engine.getProperty('voices')
-            self.engine.setProperty('voice', voices[0].id)
+            voice_id = 'default'
+            # self.engine.setProperty('voice', voices[0].id)
         else:
             self.engine.setProperty('voice', voice_id)
 

@@ -2,5 +2,7 @@ include HISTORY.md
 include LICENSE
 include README.md
 
+recursive-include pylips/face *
+
 global-exclude __pycache__
 global-exclude *.py[co]
