@@ -15,6 +15,7 @@ install_requires = [
     "flask-socketio>=5.1.1",
     "python-socketio>=5.11.1",
     "websocket-client>=1.7.0",
+    "requests>=2.31.0",
     #TTS
     "boto3>=1.18.67",
     "pygame>=2.1.1",

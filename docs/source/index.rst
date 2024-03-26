@@ -14,7 +14,7 @@ Github_.
 
 .. _Github: https://github.com/interaction-lab/PyLips
 
-.. image:: _static/face.png
+.. image:: _static/many_faces.png
 
 .. note::
 
