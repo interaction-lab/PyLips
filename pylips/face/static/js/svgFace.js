@@ -830,6 +830,24 @@ function addBrows(color, width, height, thickness, innerSize){
       browCurve.linewidth = thickness
       browCurve.stroke = color
       browCurve.cap = 'round'
+      
+      // var keypoint_color = '#e8cd25'
+      // kp1 = two.makeCircle(sign*width,0, 30);
+      // kp1.fill = 'transparent'; // Set fill to transparent
+      // kp1.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp1.linewidth = 10; 
+
+      // kp2 = two.makeCircle(sign*width/8,-0.75*thickness, 30);
+      // kp2.fill = 'transparent'; // Set fill to transparent
+      // kp2.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp2.linewidth = 10; 
+
+      // kp3 = two.makeCircle(-sign*width, thickness, 30);
+      // kp3.fill = 'transparent'; // Set fill to transparent
+      // kp3.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp3.linewidth = 10; 
+
+      // return two.makeGroup(browCurve, kp1,kp2,kp3)
       return two.makeGroup(browCurve)
     }
 
@@ -845,6 +863,9 @@ function addBrows(color, width, height, thickness, innerSize){
       var tween = new TWEEN.Tween(target, {override:true}).to(goal,t);
       tween.easing(TWEEN.Easing.Quadratic.InOut);
       var browInfo = this.group.children[0]
+      // var kp1 = this.group.children[1]
+      // var kp2 = this.group.children[2]
+      // var kp3 = this.group.children[3]
       tween.onUpdate(function() {
 
             browInfo.vertices[0].x = this.x0
@@ -855,6 +876,15 @@ function addBrows(color, width, height, thickness, innerSize){
 
             browInfo.vertices[2].x = this.x2
             browInfo.vertices[2].y = this.y2
+
+            // kp1.translation.x = this.x0
+            // kp1.translation.y = this.y0
+
+            // kp2.translation.x = this.x1
+            // kp2.translation.y = this.y1
+
+            // kp3.translation.x = this.x2
+            // kp3.translation.y = this.y2
       });
       tween.start();
     }
@@ -891,6 +921,29 @@ function addMouth(color, x, y, width, height, thickness, opening, dimple_size, u
       lipCurve.linewidth = thickness
       lipCurve.stroke = color
       lipCurve.cap = 'round'
+
+      // var keypoint_color = '#e8cd25'
+      // kp1 = two.makeCircle(width/2,0, 30);
+      // kp1.fill = 'transparent'; // Set fill to transparent
+      // kp1.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp1.linewidth = 10; 
+
+      // kp2 = two.makeCircle(width/8,height, 30);
+      // kp2.fill = 'transparent'; // Set fill to transparent
+      // kp2.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp2.linewidth = 10; 
+
+      // kp3 = two.makeCircle(-width/8,height, 30);
+      // kp3.fill = 'transparent'; // Set fill to transparent
+      // kp3.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp3.linewidth = 10; 
+
+      // kp4 = two.makeCircle(-width/2,0, 30);
+      // kp4.fill = 'transparent'; // Set fill to transparent
+      // kp4.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
+      // kp4.linewidth = 10; 
+
+      // return two.makeGroup(lipCurve, kp1,kp2,kp3,kp4)
       return two.makeGroup(lipCurve)
     }
 
@@ -902,6 +955,12 @@ function addMouth(color, x, y, width, height, thickness, opening, dimple_size, u
       var tween = new TWEEN.Tween(target, {override:true}).to(goal,t);
       tween.easing(TWEEN.Easing.Quadratic.InOut);
       var mouthInfo = this.group.children[0]
+
+      // var kp1 = this.group.children[1]
+      // var kp2 = this.group.children[2]
+      // var kp3 = this.group.children[3]
+      // var kp4 = this.group.children[4]
+
       tween.onUpdate(function() {
             mouthInfo.vertices[0].x = this.x0
             mouthInfo.vertices[0].y = this.y0
@@ -914,6 +973,18 @@ function addMouth(color, x, y, width, height, thickness, opening, dimple_size, u
 
             mouthInfo.vertices[3].x = this.x3
             mouthInfo.vertices[3].y = this.y3
+
+            // kp1.translation.x = this.x0
+            // kp1.translation.y = this.y0
+
+            // kp2.translation.x = this.x1
+            // kp2.translation.y = this.y1
+
+            // kp3.translation.x = this.x2
+            // kp3.translation.y = this.y2
+
+            // kp4.translation.x = this.x3
+            // kp4.translation.y = this.y3
       });
       tween.start();
     }

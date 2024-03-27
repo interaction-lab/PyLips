@@ -84,10 +84,10 @@ class SystemTTS:
         self.engine = pyttsx3.init()
         self.engine.setProperty('rate', 120)
         self.model = read_recognizer()
+        self.voices = self.engine.getProperty('voices')
 
     def list_voices(self):
-        voices = self.engine.getProperty('voices')
-        for voice in voices:
+        for voice in self.voices:
             print(voice.id)
 
     def gen_audio_and_visemes(self, text, voice_id=None, fname=None):
@@ -99,9 +99,9 @@ class SystemTTS:
         :param: fname - the name of the file that the audio should be saved to
         '''
         if voice_id is None:
-            voices = self.engine.getProperty('voices')
-            voice_id = 'default'
-            # self.engine.setProperty('voice', voices[0].id)
+            voice_id = 'en' if platform == "linux" or platform == "linux2" else 'default'
+        elif voice_id not in self.voices:
+            raise Exception(f'voice "{voice_id}" does not exist')
         else:
             self.engine.setProperty('voice', voice_id)
 
@@ -117,7 +117,7 @@ class SystemTTS:
         # Synthesize speech
         if platform == "linux" or platform == "linux2":
             # linux has issues with saving multiple files...
-            os.system(f"espeak-ng -s 100 '{text}' -w {fname}")
+            os.system(f"espeak-ng -v {voice_id} -s 100 '{text}' -w {fname}")
         else:
             self.engine.save_to_file(text, fname)
             self.engine.runAndWait()
@@ -126,7 +126,7 @@ class SystemTTS:
         sf.write(fname, data, samplerate)
 
         #synthesize visemes
-        out = self.model.recognize(fname, timestamp=True, lang_id='eng')
+        out = self.modelm.recognize(fname, timestamp=True, lang_id='eng')
 
         times = [i.split(' ')[0] for i in out.split('\n')]
         visemes = [IPA2VISEME[i.split(' ')[-1]] for i in out.split('\n')]
