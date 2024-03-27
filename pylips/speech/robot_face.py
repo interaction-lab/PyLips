@@ -28,8 +28,11 @@ class RobotFace:
         self.name = robot_name
         self.voice_id = voice_id
 
-        self.io = socketio.Client()
-        self.io.connect(server_ip)
+        try:
+            self.io = socketio.Client()
+            self.io.connect(server_ip)
+        except socketio.exceptions.ConnectionError as e:
+            print(f'Error connecting to server at {server_ip}. Try running:\npython3 -m pylips.face.start')
 
         pygame.mixer.init()
         self.channel = 0
@@ -44,7 +47,7 @@ class RobotFace:
         if tts_method == 'polly':
             self.tts = PollyTTS()
 
-    def say(self, content):
+    def say(self, content, wait=False):
         '''
             The main method for the RobotFace class. This method will take in a string of text and
             convert it to speech using the AWS Polly service.
@@ -70,6 +73,9 @@ class RobotFace:
         #play sound and face
         self.io.emit('face_control', request)
         pygame.mixer.Channel(self.channel).play(sound)
+
+        while wait and pygame.mixer.Channel(self.channel).get_busy():
+            pygame.time.wait(100)
 
     def save_file(self, content, filename):
         '''

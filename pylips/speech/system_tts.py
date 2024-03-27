@@ -126,7 +126,7 @@ class SystemTTS:
         sf.write(fname, data, samplerate)
 
         #synthesize visemes
-        out = self.modelm.recognize(fname, timestamp=True, lang_id='eng')
+        out = self.model.recognize(fname, timestamp=True, lang_id='eng')
 
         times = [i.split(' ')[0] for i in out.split('\n')]
         visemes = [IPA2VISEME[i.split(' ')[-1]] for i in out.split('\n')]
