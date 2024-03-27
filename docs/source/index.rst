@@ -25,8 +25,6 @@ Contents
 
 .. toctree::
    :maxdepth: 4
-   :hidden:
-   :includehidden:
 
    usage
    tutorials
