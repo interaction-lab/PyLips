@@ -37,8 +37,8 @@ class RobotFace:
         pygame.mixer.init()
         self.channel = 0
 
-        tts_methods = ['polly']
-        if tts_method not in tts_method:
+        tts_methods = ['polly', 'system']
+        if tts_method not in tts_methods:
             raise Exception(f'parameter tts_method must be one of {tts_methods}')
         
         # TODO: implement other TTS things, but for now we will use polly
@@ -151,7 +151,7 @@ class RobotFace:
         }
         self.io.emit('face_control', request)
 
-    def update_face(self, config):
+    def set_appearance(self, config):
         request = {
             'name': self.name,
             'action_type': 'update_face',
@@ -159,6 +159,10 @@ class RobotFace:
         }
         self.io.emit('face_control', request)
         time.sleep(.3)
+
+    def wait(self):
+        while pygame.mixer.Channel(self.channel).get_busy():
+            pygame.time.wait(100)
 
 
          

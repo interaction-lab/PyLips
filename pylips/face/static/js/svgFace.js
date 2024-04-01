@@ -393,24 +393,24 @@ function move_face(t, notViseme){
       var max_x = lbrow.idleControlPoint.x1/2
       var max_y = lbrow.idle_pos.y/3
 
-      lInner = {x:lbrow.idleControlPoint.x0, y:lbrow.idleControlPoint.y0}
-      rInner = {x:rbrow.idleControlPoint.x0, y:rbrow.idleControlPoint.y0}
+      lInner = {x:lbrow.idleControlPoint.x2, y:lbrow.idleControlPoint.y2}
+      rInner = {x:rbrow.idleControlPoint.x2, y:rbrow.idleControlPoint.y2}
 
-      lInner.y -= max_y * (1.5*aus_l[1] + .1*aus_l[2] - 1.2*aus_l[4])
+      lInner.y -= max_y * (0.5*aus_l[1] + .1*aus_l[2] - .3*aus_l[4])
       lInner.x -= max_x * (0.15*aus_l[1] + 0.5*aus_l[4])
-      rInner.y -= max_y * (1.5*aus_r[1] + .1*aus_r[2] - 1.2*aus_r[4])
+      rInner.y -= max_y * (0.5*aus_r[1] + .1*aus_r[2] - .3*aus_r[4])
       rInner.x += max_x * (0.15*aus_r[1]  + 0.5*aus_r[4])
 
       lMid = {x:lbrow.idleControlPoint.x1, y:lbrow.idleControlPoint.y1}
       rMid = {x:rbrow.idleControlPoint.x1, y:rbrow.idleControlPoint.y1}
 
-      lMid.y -= max_y * (0.1*aus_l[1] + aus_l[2] - 0.6*aus_l[4])
-      lMid.x -= max_x * (aus_l[1] + -0.5*aus_l[2] + aus_l[4])
-      rMid.y -= max_y * (0.1*aus_r[1] + aus_r[2]  - 0.6*aus_r[4])
-      rMid.x += max_x * (aus_r[1] + -0.5*aus_r[2] + aus_r[4])
+      lMid.y -= max_y * (0.1*aus_l[1] + .6*aus_l[2] - 0.2*aus_l[4])
+      lMid.x -= max_x * (aus_l[1] + -0.3*aus_l[2] + aus_l[4])
+      rMid.y -= max_y * (0.1*aus_r[1] + .6*aus_r[2]  - 0.2*aus_r[4])
+      rMid.x += max_x * (aus_r[1] + -0.3*aus_r[2] + aus_r[4])
 
-      lOuter = {x:lbrow.idleControlPoint.x2, y:lbrow.idleControlPoint.y2}
-      rOuter = {x:rbrow.idleControlPoint.x2, y:rbrow.idleControlPoint.y2}
+      lOuter = {x:lbrow.idleControlPoint.x0, y:lbrow.idleControlPoint.y0}
+      rOuter = {x:rbrow.idleControlPoint.x0, y:rbrow.idleControlPoint.y0}
 
       lOuter.y -= max_y * (0.5*aus_l[2] + 0.1*aus_l[4])
       lOuter.x -= max_x * (-.2*aus_l[2]  + 0.2*aus_l[4])
@@ -480,6 +480,7 @@ function move_face(t, notViseme){
       // nose.scale({x:nose.idle_scale.x*width_scale}, t);
 
     }
+
     // ***** MOUTH *****
     ulip=getPart("ulip");
     llip=getPart("llip");
@@ -488,8 +489,8 @@ function move_face(t, notViseme){
     max_down_dist = (nose.idle_pos.y-llip.idle_pos.y)/1.5
     max_x_variation = (ulip.idleControlPoint.x0 - ulip.idleControlPoint.x3) / 4; //should be width divided by 2 I think
 
-    lcorner = {x:ulip.idleControlPoint.x3, y:ulip.idleControlPoint.y3}
-    rcorner = {x:ulip.idleControlPoint.x0, y:ulip.idleControlPoint.y0}
+    lcorner = {x:ulip.idleControlPoint.x0, y:ulip.idleControlPoint.y0}
+    rcorner = {x:ulip.idleControlPoint.x3, y:ulip.idleControlPoint.y3}
 
     lcorner.x += max_x_variation*(.2*aus_l[12] + .05*aus_l[13] + .25*aus_l[14] -.1*aus_l[26] -.3*aus_l[27] +.35*aus_l[17]-.7*aus_l[18] + .25*aus_l[20] -.2*aus_l[23] -.1*aus_l[24])/1.1
     lcorner.y += max_down_dist*(-.2*aus_l[25] -.2*aus_l[26] + .7*aus_l[13]-1.5*aus_l[15]-.5*aus_l[27] - .2*aus_l[20] -.3*aus_l[23] -.5*aus_l[24])/3.4
@@ -497,8 +498,8 @@ function move_face(t, notViseme){
     rcorner.y += max_down_dist*(-.2*aus_r[25] -.2*aus_r[26] + .7*aus_r[13]-1.5*aus_r[15]-.5*aus_r[27] - .2*aus_r[20] -.3*aus_r[23] -.5*aus_r[24])/3.4
 
 
-    upperl = {x:ulip.idleControlPoint.x2, y:ulip.idleControlPoint.y2}
-    upperr = {x:ulip.idleControlPoint.x1, y:ulip.idleControlPoint.y1}
+    upperl = {x:ulip.idleControlPoint.x1, y:ulip.idleControlPoint.y1}
+    upperr = {x:ulip.idleControlPoint.x2, y:ulip.idleControlPoint.y2}
 
     upperl.x += max_x_variation*(.55*aus_l[10] + .25*aus_l[14]-.4*aus_l[18]+ .25*aus_l[20] -.1*aus_l[23])/1.05
     upperl.y += max_up_dist*(.1*aus_l[25] +.3*aus_l[26] +.6*aus_l[27] + .55*aus_l[10]+.35*aus_l[17])/2.2
@@ -506,16 +507,16 @@ function move_face(t, notViseme){
     upperr.y += max_up_dist*(.1*aus_r[25] +.3*aus_r[26] +.6*aus_r[27] + .55*aus_r[10]+.35*aus_r[17])/2.2
 
 
-    lowerl = {x:llip.idleControlPoint.x2, y:llip.idleControlPoint.y2}
-    lowerr = {x:llip.idleControlPoint.x1, y:llip.idleControlPoint.y1}
+    lowerl = {x:llip.idleControlPoint.x1, y:llip.idleControlPoint.y1}
+    lowerr = {x:llip.idleControlPoint.x2, y:llip.idleControlPoint.y2}
 
     lowerl.x += max_x_variation*(.25*aus_l[14] + .5*aus_l[16] + .2*aus_l[26]-.4*aus_l[18]+ .25*aus_l[20] -.2*aus_l[23])/1.05
     lowerl.y += max_down_dist*(-.4*aus_l[25] -.7*aus_l[26] -1.6*aus_l[27]+ .55*aus_l[10] -.2*aus_l[16] +.45*aus_l[17])/2.2
     lowerr.x -= max_x_variation*(.25*aus_r[14] + .5*aus_r[16] + .2*aus_r[26]-.4*aus_r[18] + .25*aus_r[20] -.2*aus_r[23])/1.05
     lowerr.y += max_down_dist*(-.4*aus_r[25] -.7*aus_r[26] -1.6*aus_r[27] + .55*aus_r[10] -.2*aus_r[16] +.45*aus_r[17])/2.2
 
-    upperLip = {x0:rcorner.x,y0:rcorner.y, x1:upperr.x,y1:upperr.y, x2:upperl.x,y2: upperl.y , x3:lcorner.x,y3:lcorner.y}
-    lowerLip = {x0:rcorner.x,y0:rcorner.y, x1:lowerr.x,y1:lowerr.y, x2:lowerl.x,y2: lowerl.y , x3:lcorner.x,y3:lcorner.y}
+    upperLip = {x3:rcorner.x,y3:rcorner.y, x2:upperr.x,y2:upperr.y, x1:upperl.x,y1: upperl.y , x0:lcorner.x,y0:lcorner.y}
+    lowerLip = {x3:rcorner.x,y3:rcorner.y, x2:lowerr.x,y2:lowerr.y, x1:lowerl.x,y1: lowerl.y , x0:lcorner.x,y0:lcorner.y}
 
 
     ulip.interpolateLips(upperLip, t);
@@ -824,7 +825,7 @@ TODO: add a parameter for the height of the brow arch
 function addBrows(color, width, height, thickness, innerSize){
 
     function makeBrowGroup(side){
-      var sign = side == 'left' ? 1 : -1
+      var sign = side == 'left' ? -1 : 1
       var browCurve = two.makeCurve( sign*width,0, sign*width/8,-0.75*thickness , -sign*width, thickness, true)
       browCurve.fill = 'None'
       browCurve.linewidth = thickness
@@ -835,7 +836,7 @@ function addBrows(color, width, height, thickness, innerSize){
       // kp1 = two.makeCircle(sign*width,0, 30);
       // kp1.fill = 'transparent'; // Set fill to transparent
       // kp1.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
-      // kp1.linewidth = 10; 
+      // kp1.linewidth = 1; 
 
       // kp2 = two.makeCircle(sign*width/8,-0.75*thickness, 30);
       // kp2.fill = 'transparent'; // Set fill to transparent
@@ -845,7 +846,7 @@ function addBrows(color, width, height, thickness, innerSize){
       // kp3 = two.makeCircle(-sign*width, thickness, 30);
       // kp3.fill = 'transparent'; // Set fill to transparent
       // kp3.stroke = keypoint_color; // Set stroke color (you can change it to any color you prefer)
-      // kp3.linewidth = 10; 
+      // kp3.linewidth = 20; 
 
       // return two.makeGroup(browCurve, kp1,kp2,kp3)
       return two.makeGroup(browCurve)
@@ -897,12 +898,12 @@ function addBrows(color, width, height, thickness, innerSize){
 
     var y = reye.group.translation.y - height
 
-    lbrow = new facePart("lbrow", makeBrowGroup('left'), xl, y)
+    lbrow = new facePart("rbrow", makeBrowGroup('left'), xl, y)
     lbrow.idleControlPoint = getIdleCoords('left')
     lbrow.currentControlPoint = getIdleCoords('left')
     lbrow.interpolateBrows = interpolateBrows
 
-    rbrow = new facePart("rbrow", makeBrowGroup('right'), xr, y);
+    rbrow = new facePart("lbrow", makeBrowGroup('right'), xr, y);
     rbrow.idleControlPoint = getIdleCoords('right')
     rbrow.currentControlPoint = getIdleCoords('right')
     rbrow.interpolateBrows = interpolateBrows

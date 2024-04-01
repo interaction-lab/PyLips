@@ -84,11 +84,11 @@ class SystemTTS:
         self.engine = pyttsx3.init()
         self.engine.setProperty('rate', 120)
         self.model = read_recognizer()
-        self.voices = self.engine.getProperty('voices')
+        self.voices = [voice.id for voice in self.engine.getProperty('voices')]
 
     def list_voices(self):
         for voice in self.voices:
-            print(voice.id)
+            print(voice)
 
     def gen_audio_and_visemes(self, text, voice_id=None, fname=None):
         '''

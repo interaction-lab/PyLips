@@ -2,7 +2,7 @@
 
 __author__ = "Interaction Lab"
 __email__ = "dennler@usc.edu"
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 from pylips import face, speech
 
