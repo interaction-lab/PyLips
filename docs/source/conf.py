@@ -74,7 +74,7 @@ extensions = [
     "sphinx_toolbox.more_autodoc.autonamedtuple",
     "sphinx_autodoc_typehints",
     "sphinx_codeautolink",
-    "github_links",
+    # "github_links",
 ]
 
 # Napoleon
@@ -109,7 +109,7 @@ source_suffix = [".rst", ".md", ".ipynb"]
 master_doc = "index"
 
 # General information about the project.
-project = "pylips"
+project = "PyLips"
 copyright = "2024, Interaction Lab"
 author = "Nathaniel Dennler"
 
