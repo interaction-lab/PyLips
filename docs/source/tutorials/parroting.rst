@@ -11,13 +11,13 @@ text. If you are using PyLips for an interaction with mostly pre-recorded speech
 record your own voice (or hire a voice actor) to record the phrases you need in your 
 interaction.
 
-In this tutorial, we will be using the `sounddevice` and `soundfile` libraries to record a 3 second
-audio clip. We will then use the `allosaurus` library to recognize the phonemes in the audio file.
-Finally, we will use the `RobotFace` class to play back the audio file and display the visemes on the robot face.
+In this tutorial, we will be using the ``sounddevice`` and ``soundfile`` libraries to record a 3 second
+audio clip. We will then use the ``allosaurus`` library to recognize the phonemes in the audio file.
+Finally, we will use the ``RobotFace`` class to play back the audio file and display the visemes on the robot face.
 
-Prior to beginning this tutorial, ensure that you have run `python3 -m pylips.face.start` to 
-start the robot face. You may also need to install the `sounddevice` and `soundfile` libraries using
-`python3 -m pip install sounddevice soundfile`.  `allosaurus` is included in the PyLips requirements, 
+Prior to beginning this tutorial, ensure that you have run ``python3 -m pylips.face.start`` to 
+start the robot face. You may also need to install the ``sounddevice`` and ``soundfile`` libraries using
+``python3 -m pip install sounddevice soundfile``.  ``allosaurus`` is included in the PyLips requirements, 
 so you should not need to install it separately.
 
 First, we will import all the necessary libraries for this tutorial.
@@ -52,8 +52,8 @@ variables to match the audio input of your microphone.
     robot = RobotFace()
 
 
-Next, we use the `sounddevice` library to record an audio clip and save 
-the audio clip to a file in the `pylips_phrases` directory, which is automatically
+Next, we use the ``sounddevice`` library to record an audio clip and save 
+the audio clip to a file in the ``pylips_phrases`` directory, which is automatically
 created when the pylips face is instantiated.
 
 .. code-block:: python
@@ -65,8 +65,8 @@ created when the pylips face is instantiated.
     sf.write('pylips_phrases/parroted.wav', myrecording, sd.default.samplerate)
 
 
-Next, we use the `allosaurus` library to recognize the phonemes in the audio file.
-We then convert the phonemes to visemes using the `IPA2VISEME` dictionary, and save
+Next, we use the ``allosaurus`` library to recognize the phonemes in the audio file.
+We then convert the phonemes to visemes using the ``IPA2VISEME`` dictionary, and save
 the result in the expected format for PyLips.
 
 .. code-block:: python
@@ -81,8 +81,8 @@ the result in the expected format for PyLips.
     pickle.dump((times, visemes), open(f'pylips_phrases/parroted.pkl', 'wb'))
 
 
-Finally, we use the `RobotFace` class to play back the audio file and display 
-the visemes on the robot face. We use the existing `say_file` method to play the files
+Finally, we use the ``RobotFace`` class to play back the audio file and display 
+the visemes on the robot face. We use the existing ``say_file`` method to play the files
 we created in the previous step.
 
 .. code-block:: python
