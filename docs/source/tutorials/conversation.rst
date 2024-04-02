@@ -35,7 +35,7 @@ Next, we define the actors in the scene, and set their appearances and voices. T
 to different numbers of characters, and different appearances and voices can be set for each character.
 You may change the voices based on the available voices on your system.
 
-.. code-block:: python
+```python
     VOICE1 = RobotFace().tts.voices[0]
     VOICE2 = RobotFace().tts.voices[1]
 
@@ -46,6 +46,7 @@ You may change the voices based on the available voices on your system.
 
     actors['FARQUAAD'].set_appearance(face_presets.chili)
     actors['GINGERBREAD MAN'].set_appearance(face_presets.gingerbreadman)
+```
 
 Finally, we iterate over the lines in the script. For each line, we split the line on the ':'character
 to obtain the actor that will speak the line, and the content of the line. We then use the `say` method
