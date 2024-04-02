@@ -11,16 +11,21 @@ from .polly_tts import PollyTTS
 from .system_tts import SystemTTS
 
 class RobotFace:
+    '''
+    This class represents one robot that can be controlled. The face has several
+    embodied cues that can be controlled, including speech, gaze, and facial expressions.
+    
+    Args:
+        robot_name (str): the identity of the robot that should be speaking
+        server_ip (str): the location of the server running the flask application.
+        tts_method (str): the method that the robot should use to generate speech.
+        voice_id (str): the voice that the robot should use to generate speech.
+    '''
     def __init__(self,
                  robot_name: str = 'default',
                  server_ip: str = 'http://localhost:8000',
                  tts_method: str = 'system',
                  voice_id: str = None):
-        '''
-            The main class for the PyLips project.
-            :param: robot_name - the identity of the robot that should be speaking
-            :param: server_ip - the location of the server running the flask application.
-        '''
 
         if os.path.exists('pylips_phrases') == False:
             os.mkdir('pylips_phrases')
@@ -49,9 +54,11 @@ class RobotFace:
 
     def say(self, content, wait=False):
         '''
-            The main method for the RobotFace class. This method will take in a string of text and
-            convert it to speech using the AWS Polly service.
-            :param: content - the text that the robot should speak
+            Generates speech and visemes from a string of text using 
+            the tts backend described that RobotFace is initialized with.
+
+            Args:
+                content (str): the text that the robot should speak
         '''
 
         fname, times, visemes = self.tts.gen_audio_and_visemes(content, self.voice_id)
