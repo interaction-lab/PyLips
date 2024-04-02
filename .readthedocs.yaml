@@ -5,9 +5,13 @@ build:
   tools:
     python: "3.10"
 
-python:
-  install:
-    - requirements: docs/requirements.txt
-
 sphinx:
   configuration: docs/source/conf.py
+
+# Set the version of Python and requirements required to build the docs.
+python:
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - dev
