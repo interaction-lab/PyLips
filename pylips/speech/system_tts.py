@@ -87,8 +87,8 @@ class SystemTTS:
         self.voices = [voice.id for voice in self.engine.getProperty('voices')]
 
     def list_voices(self):
-        for voice in self.voices:
-            print(voice)
+        for i, voice in enumerate(self.voices):
+            print(f'{i}: {voice}')
 
     def gen_audio_and_visemes(self, text, voice_id=None, fname=None):
         '''
@@ -100,6 +100,10 @@ class SystemTTS:
         '''
         if voice_id is None:
             voice_id = 'en' if platform == "linux" or platform == "linux2" else 'default'
+        
+        elif type(voice_id) == int and voice_id < len(self.voices):
+            voice_id = self.voices[voice_id]
+
         elif voice_id not in self.voices:
             raise Exception(f'voice "{voice_id}" does not exist')
         else:
