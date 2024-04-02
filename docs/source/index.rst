@@ -28,4 +28,12 @@ Contents
 
    usage
    tutorials
-   api
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API
+
+   api/pylips.face
+   api/pylips.speech
+
+

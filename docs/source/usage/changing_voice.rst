@@ -1,4 +1,4 @@
-Creating Multiple Faces
+Changing the Voice
 =====
 
 You may not like your default system voice, and that's okay! PyLips allows you to change the voice.
