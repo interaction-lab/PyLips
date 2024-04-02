@@ -55,6 +55,7 @@ extras_require = {
         "sphinxcontrib-jsmath==1.0.1",
         "sphinxcontrib-qthelp==1.0.3",
         "sphinxcontrib-serializinghtml==1.1.5",
+        "sphinx-rtd-theme==1.3.0rc1",
 
         # Distribution
         "bump2version==1.0.1",
