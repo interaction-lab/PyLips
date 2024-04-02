@@ -16,13 +16,13 @@ uses other free and open-source software for turning these sounds into facial ex
 You can install PyLips using pip. To install PyLips, run this command in your terminal:
 
 ```
-$ python3 -m pip install pylips
+python3 -m pip install pylips
 ```
 
 If you are running PyLips on a Linux Distribution, you may need to also install the following packages:
 
 ```
-$ sudo apt update && sudo apt install espeak-ng ffmpeg libespeak1
+sudo apt update && sudo apt install espeak-ng ffmpeg libespeak1
 ```
 
 ## PyLips Quickstart
@@ -35,7 +35,7 @@ First, we will have to start the PyLips server. This is a simple flask sever tha
 faces at the same time. To start the server, run the following command:
 
 ```
-$ python3 -m pylips.face.start
+python3 -m pylips.face.start
 ```
 
 This will start the server on port 8000. Do not worry about the warning message, the package will 
