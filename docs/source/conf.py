@@ -71,7 +71,6 @@ extensions = [
     "sphinx_material",
     "sphinx_copybutton",
     "myst_nb",  # Covers both Markdown files and Jupyter notebooks.
-    "matplotlib.sphinxext.plot_directive",
     "sphinx_toolbox.more_autodoc.autonamedtuple",
     "sphinx_autodoc_typehints",
     "sphinx_codeautolink",
@@ -273,13 +272,6 @@ autosummary_generate = True
 
 # Intersphinx
 intersphinx_mapping = {
-    "matplotlib": ("https://matplotlib.org/stable/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
-    "python": ("https://docs.python.org/3/", None),
-    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
-    "sklearn": ("https://scikit-learn.org/stable/", None),
-    "qdax": ("https://qdax.readthedocs.io/en/latest/", None),
-    "shapely": ("https://shapely.readthedocs.io/en/stable/", None),
-    "cma": ("https://cma-es.github.io/apidocs-pycma/", None),
+    'python': ('https://docs.python.org/3/', None),
+    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
 }
