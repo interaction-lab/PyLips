@@ -7,6 +7,6 @@ Here is a list of the tutorials we have!
    :maxdepth: 2
    :titlesonly:
 
-   tutorials/conversation
+   tutorials/conversation.md
    tutorials/follow
    tutorials/parroting
