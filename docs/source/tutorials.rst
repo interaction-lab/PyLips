@@ -9,3 +9,4 @@ Here is a list of the tutorials we have!
 
    tutorials/conversation
    tutorials/follow
+   tutorials/parroting

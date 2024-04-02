@@ -5,7 +5,7 @@ two robots talking!
 
 .. code-block:: python
 
-   from pylips.speech import RobotFace
+    from pylips.speech import RobotFace
     from pylips.face import face_presets
     script = '''
     FARQUAAD: I've tried to be fair to you. Now my patience has reached its end. Tell me or I'll...
