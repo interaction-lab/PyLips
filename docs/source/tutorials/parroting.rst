@@ -23,6 +23,7 @@ so you should not need to install it separately.
 First, we will import all the necessary libraries for this tutorial.
 
 .. code-block:: python
+
     import sounddevice as sd
     import soundfile as sf
     import pickle 
@@ -40,6 +41,7 @@ need to modify the ``sd.default.samplerate`` and ``sd.default.channels``
 variables to match the audio input of your microphone.
 
 .. code-block:: python
+
     # sound recording parameters
     duration = 3  # seconds
     sd.default.samplerate = 44100
@@ -57,6 +59,7 @@ the audio clip to a file in the ``pylips_phrases`` directory, which is automatic
 created when the pylips face is instantiated.
 
 .. code-block:: python
+
     #record
     myrecording = sd.rec(int(duration * sd.default.samplerate))
     print( "Recording Audio")
@@ -70,6 +73,7 @@ We then convert the phonemes to visemes using the ``IPA2VISEME`` dictionary, and
 the result in the expected format for PyLips.
 
 .. code-block:: python
+
     out = phoneme_model.recognize('pylips_phrases/parroted.wav', timestamp=True, lang_id='eng')
 
     times = [i.split(' ')[0] for i in out.split('\n')]
@@ -86,6 +90,7 @@ the visemes on the robot face. We use the existing ``say_file`` method to play t
 we created in the previous step.
 
 .. code-block:: python
+    
     robot.say_file('parroted')
     robot.wait()
 
