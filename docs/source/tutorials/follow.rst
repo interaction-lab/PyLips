@@ -25,7 +25,7 @@ to better suit your specific setup.
     import sys
     import numpy as np
     from pylips.speech import RobotFace
-    import time
+    import signal
 
     X_SCALE = 720
     Y_SCALE = 480
