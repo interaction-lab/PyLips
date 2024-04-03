@@ -22,7 +22,7 @@ users is to follow the principles of `Participatory Design <https://www.interact
 .. raw:: html
 
     <div style="position: relative; max-width: 100%; height: auto;">
-        <iframe width="85%" max-height="20vh" src="https://www.youtube.com/embed/Ki3d-An25DA?si=B6ouGV2I-Y3-t9Yz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe width="85%" height="350px" src="https://www.youtube.com/embed/Ki3d-An25DA?si=B6ouGV2I-Y3-t9Yz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
 
 more text 
