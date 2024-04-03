@@ -9,7 +9,7 @@ PyLips is easy to install, simple to use, and open-source.
 It comes ready to use with your system's speech synthesis tools, and
 uses other free and open-source software for turning these sounds into facial expressions.
 
-![The RIBS framework](docs/source/_static/many_faces.png)
+![The PyLips Face](docs/source/_static/imgs/many_faces.png)
 
 ## To Install from PyPI
 

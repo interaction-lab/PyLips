@@ -36,5 +36,4 @@ if __name__ == '__main__':
         })
 
         aimee.say('hey diva, did you remember to SLAY Today?')
-            
         

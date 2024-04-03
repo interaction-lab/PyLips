@@ -1,7 +1,7 @@
 Two Robots Talking
 ===================================
 
-This tutorial walks you through using the `RobotFace` class to simulate two robots talking to each other.
+This tutorial walks you through using the ``RobotFace`` class to simulate two robots talking to each other.
 
 One strength of pylips is its ability to simulate multiple robots talking to each other. 
 This is useful for developing multi-robot systems, as well as for creating more complex 
@@ -50,6 +50,10 @@ You may change the voices based on the available voices on your system.
     actors['FARQUAAD'].set_appearance(face_presets.chili)
     actors['GINGERBREAD MAN'].set_appearance(face_presets.gingerbreadman)
 
+
+Once we have defined these characters, they will be available at the urls ``localhost:8000/face/FARQUAAD`` 
+and ``localhost:8000/face/GINGERBREAD MAN``. Be sure to run ``python3 -m pylips.face.start`` to 
+connect to these faces.
 
 Finally, we iterate over the lines in the script. For each line, we split the line on the ':'character
 to obtain the actor that will speak the line, and the content of the line. We then use the ``say`` method
