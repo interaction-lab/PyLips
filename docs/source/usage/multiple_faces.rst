@@ -9,7 +9,7 @@ is done by passing the name to the ``RobotFace`` constructor.
 
 .. code-block:: python
 
-    from pylips import RobotFace
+    from pylips.speech import RobotFace
 
     face1 = RobotFace(robot_name='face1')
     face2 = RobotFace(robot_name='face2')

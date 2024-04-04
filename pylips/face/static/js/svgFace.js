@@ -649,7 +649,8 @@ function viseme(viseme_name, t){
     break;
 
     case "IDLE":
-    zeroFace(t)
+    zero_aus_no_move([10,13,14,16,18,20,23,24,25,26,27])
+    move_face(t, false)
     break;
     }
 }

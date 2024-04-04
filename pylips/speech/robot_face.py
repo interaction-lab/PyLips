@@ -156,6 +156,7 @@ class RobotFace:
             'aus': aus,
             'time': time
         }
+        
         self.io.emit('face_control', request)
 
     def set_appearance(self, config):

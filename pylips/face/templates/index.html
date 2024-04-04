@@ -38,9 +38,12 @@
 
             if (msg.action_type == 'express') {
                 for (var au_cmd in msg.aus){
-                    au_number = parseInt(au_cmd.slice(2,-1))
-                    side = au_cmd[-1] //only matters if the last character is l or r (doesn't matter what else)
+                    au_number = parseInt(au_cmd.slice(2))
+                    // if the last character is 'l' or 'r', it's a side command
+                    // if it is a number, au() will assume both sides
+                    side = au_cmd.slice(-1)
                     degree = msg.aus[au_cmd]
+                    console.log(au_cmd, degree, side)
                     au(au_number, degree, side)
                 }
 
