@@ -60,6 +60,7 @@ Follow these other guides to learn more about PyLips:
    :titlesonly:
 
    usage/changing_voice
+   usage/changing_face_appearance
    usage/tts_integration
    usage/making_expressions
    usage/multiple_faces
