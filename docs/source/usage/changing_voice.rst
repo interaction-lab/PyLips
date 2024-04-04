@@ -22,3 +22,17 @@ RobotFace constructor. For example, to use the voice ``com.apple.voice.premium.e
 
 You can replace ``com.apple.voice.premium.en-US.Zoe`` with any of the voices you found in the previous step.
 The voices that are available to you will depend on your system.
+
+Adding Voices on Mac
+----------------
+
+If you're on a Mac, you can add more voices by going to:
+
+``System Preferences -> Accessibility -> Spoken Content -> System Voice -> Manage Voices...``
+
+It should look like this:
+
+.. image:: _static/imgs/add_voices.png
+
+Once you press this, you can listen to the options and download the voices you like. Once you have done this,
+they will be automatically available for use. You can find their names by running the code above.

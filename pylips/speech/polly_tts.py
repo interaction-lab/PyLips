@@ -28,6 +28,23 @@ class PollyTTS:
     def __init__(self):
         self.tts = boto3.client('polly')
 
+        # all current amazon polly voices
+        self.voices = ['Zeina','Hala','Zayd','Lisa','Arlet','Hiujin','Zhiyu','Naja','Mads',
+                       'Sofie','Laura','Lotte','Ruben','Nicole','Olivia','Russell','Amy','Emma',
+                       'Brian','Arthur','Aditi','Raveena','Kajal','Niamh','Aria','Ayanda','Danielle',
+                       'Gregory','Ivy','Joanna','Kendra','Kimberly','Salli','Joey','Justin','Kevin',
+                       'Matthew','Ruth','Stephen','Geraint','Suvi','Celine','Léa','Mathieu','Rémi',
+                       'Isabelle','Chantal','Gabrielle','Liam','Marlene','Vicki','Hans','Daniel',
+                       'Hannah','Aditi','Kajal','Dora','Karl','Carla','Bianca','Giorgio','Adriano',
+                       'Mizuki','Takumi','Kazuha','Tomoko','Seoyeon','Liv','Ida','Ewa','Maja','Jacek',
+                       'Jan','Ola','Camila','Vitoria','Ricardo','Thiago','Ines','Cristiano','Carmen',
+                       'Tatyana','Maxim','Conchita','Lucia','Enrique','Sergio','Mia','Andrés','Lupe',
+                       'Penelope','Miguel','Pedro','Astrid','Elin','Filiz','Burcu','Gwyneth']
+
+    def list_voices(self):
+        for i, voice in enumerate(self.voices):
+            print(f'{i}: {voice}')
+
     def gen_audio_and_visemes(self, text, voice_id=None, fname=None):
         '''
         generates an audio file that says the text of _text_ in the voice of _voice_id_
