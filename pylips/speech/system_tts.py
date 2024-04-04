@@ -164,7 +164,6 @@ IPA2VISEME = {
     'ŋ': 'VELAR_GLOTTAL',
     'h': 'VELAR_GLOTTAL',
     'ʔ': 'VELAR_GLOTTAL',
-    
 
     'ɪ': 'CLOSE_FRONT_VOWEL',
     'I': 'CLOSE_FRONT_VOWEL',

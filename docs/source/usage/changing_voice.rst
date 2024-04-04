@@ -32,7 +32,7 @@ If you're on a Mac, you can add more voices by going to:
 
 It should look like this:
 
-.. image:: _static/imgs/add_voices.png
+.. image:: ../_static/imgs/add_voices.png
 
 Once you press this, you can listen to the options and download the voices you like. Once you have done this,
 they will be automatically available for use. You can find their names by running the code above.
