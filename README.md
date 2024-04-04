@@ -45,12 +45,12 @@ For now, just open a browser and go to `http://localhost:8000/face` to see the f
 Now open a new terminal tab and run the following code:
 
 ```
-   from pylips.speech import RobotFace
+from pylips.speech import RobotFace
 
-   face = RobotFace()
-   # you may need to wait here for a minute or two to let allosaurus download on the first run
+face = RobotFace()
+# you may need to wait here for a minute or two to let allosaurus download on the first run
 
-   face.say("Hello, welcome to pylips!")
+face.say("Hello, welcome to pylips!")
 ```
 
 If all goes well, the face should have said the message!
