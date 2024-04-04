@@ -24,6 +24,15 @@ VIS2IPA = {"p": "BILABIAL",
 
 
 class PollyTTS:
+    '''
+    A text-to-speech backend that uses Amazon Polly.
+
+    This class is used to generate audio files from text using Amazon Polly. It can also generate visemes
+    that correspond to the audio files that it generates.
+
+    args:
+        None
+    '''
 
     def __init__(self):
         self.tts = boto3.client('polly')
@@ -42,16 +51,31 @@ class PollyTTS:
                        'Penelope','Miguel','Pedro','Astrid','Elin','Filiz','Burcu','Gwyneth']
 
     def list_voices(self):
+        '''
+        Lists all the voices that are available in the Amazon Polly TTS backend.
+
+        For a more in-depth look at the voices, see the `Amazon Polly documentation 
+        <https://docs.aws.amazon.com/polly/latest/dg/voicelist.html>`_.
+
+        args:
+            None
+        '''
         for i, voice in enumerate(self.voices):
             print(f'{i}: {voice}')
 
     def gen_audio_and_visemes(self, text, voice_id=None, fname=None):
         '''
-        generates an audio file that says the text of _text_ in the voice of _voice_id_
+        Generates an audio file and visemes from a string of text using Amazon Polly.
 
-        :param: text - the text that the robot should speak
-        :param: voice_id - the voice that the robot should speak in
-        :param: fname - the name of the file that the audio should be saved to
+        args:
+            text (str): the text that the robot should speak
+            voice_id (str): the voice that the robot should speak in
+            fname (str): the name of the file that the audio should be saved to
+
+        returns:
+            fname (str): the name of the file that the audio was saved to
+            times (list[float]): a list of times that correspond to the initiation of the visemes
+            visemes (list[str]): a list of visemes that correspond to the words in the audio
         '''
         if voice_id is None:
             voice_id = 'Justin'
@@ -108,7 +132,18 @@ class PollyTTS:
     
     def get_audio_and_visemes(self, fname):
         '''
+        Loads presaved audio and visemes from a file.
+
+        args:
+            fname (str): the name of the file that the audio and visemes were saved to
         
+        returns:
+            fname (str): the name of the file that the audio was saved to
+            times (list[float]): a list of times that correspond to the initiation of the visemes
+            visemes (list[str]): a list of visemes that correspond to the words in the audio
+        
+        raises:
+            Exception: if the file does not exist
         '''
         #if it was already cached, return it, otherwise, raise an error
         fname = f"pylips_phrases/{fname}.mp3"

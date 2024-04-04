@@ -1,4 +1,4 @@
-"""Speech contains the Python functions for interacting with the PyLips face.
+"""``speech`` contains the Python functions for interacting with the PyLips face.
 
 The RobotFace class is the main class that is used to interact with the robot's face. 
 It contains methods for speaking text, saving speech to a file, and stopping speech.
