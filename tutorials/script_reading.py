@@ -1,5 +1,6 @@
 from pylips.speech import RobotFace
-from pylips.face import face_presets
+from pylips.face import FacePresets
+
 script = '''
 FARQUAAD: I've tried to be fair to you. Now my patience has reached its end. Tell me or I'll...
 GINGERBREAD MAN: No, no, not the buttons. Not my gumdrop buttons.
@@ -19,8 +20,8 @@ actors = {
         'GINGERBREAD MAN': RobotFace(robot_name='GINGERBREAD MAN', voice_id=RobotFace().tts.voices[142])
     }
 
-actors['FARQUAAD'].set_appearance(face_presets.chili)
-actors['GINGERBREAD MAN'].set_appearance(face_presets.gingerbreadman)
+actors['FARQUAAD'].set_appearance(FacePresets.chili)
+actors['GINGERBREAD MAN'].set_appearance(FacePresets.gingerbreadman)
 
 for line in script.split('\n'):
     if ':' not in line:

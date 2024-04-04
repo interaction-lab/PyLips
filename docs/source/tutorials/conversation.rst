@@ -17,7 +17,7 @@ First, we import the necessary classes and functions from PyLips, and write out 
 .. code-block:: python
 
     from pylips.speech import RobotFace
-    from pylips.face import face_presets
+    from pylips.face import FacePresets
     script = '''
     FARQUAAD: I've tried to be fair to you. Now my patience has reached its end. Tell me or I'll...
     GINGERBREAD MAN: No, no, not the buttons. Not my gumdrop buttons.
@@ -47,8 +47,8 @@ You may change the voices based on the available voices on your system.
             'GINGERBREAD MAN': RobotFace(robot_name='GINGERBREAD MAN', voice_id=VOICE2)
         }
 
-    actors['FARQUAAD'].set_appearance(face_presets.chili)
-    actors['GINGERBREAD MAN'].set_appearance(face_presets.gingerbreadman)
+    actors['FARQUAAD'].set_appearance(FacePresets.chili)
+    actors['GINGERBREAD MAN'].set_appearance(FacePresets.gingerbreadman)
 
 
 Once we have defined these characters, they will be available at the urls ``localhost:8000/face/FARQUAAD`` 

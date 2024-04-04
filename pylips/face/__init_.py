@@ -1,1 +1,1 @@
-from pylips.face import face_presets
+from pylips.face import FacePresets
