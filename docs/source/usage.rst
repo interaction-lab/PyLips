@@ -50,6 +50,11 @@ Now open a new terminal tab and run the following code:
 
 If all goes well, the face should have said the message!
 
+.. note::
+
+   PyLips generates a folder in the directory you run it called ``pylips_phrases``. This folder is used to 
+   store the generated sound files. You may delete this folder at any time, but it will be recreated when needed.
+
 
 More Features of PyLips
 ----------------

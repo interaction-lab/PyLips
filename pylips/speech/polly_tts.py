@@ -4,25 +4,6 @@ import os
 from contextlib import closing
 import pickle
 
-VIS2IPA = {"p": "BILABIAL",
-            "f": "LABIODENTAL",
-            "T": "INTERDENTAL",
-            "s": "DENTAL_ALVEOLAR",
-            "t": "DENTAL_ALVEOLAR",
-            "S": "POSTALVEOLAR",
-            "r": "POSTALVEOLAR",
-            "k": "VELAR_GLOTTAL",
-            "i": "CLOSE_FRONT_VOWEL",
-            "u": "CLOSE_BACK_VOWEL",
-            "@": "MID_CENTRAL_VOWEL",
-            "a": "OPEN_FRONT_VOWEL",
-            "e": "OPEN_FRONT_VOWEL",
-            "E": "OPEN_FRONT_VOWEL",
-            "o": "OPEN_BACK_VOWEL",
-            "O": "OPEN_BACK_VOWEL",
-            "sil": "IDLE"}
-
-
 class PollyTTS:
     '''
     A text-to-speech backend that uses Amazon Polly.
@@ -73,9 +54,9 @@ class PollyTTS:
             fname (str): the name of the file that the audio should be saved to
 
         returns:
-            fname (str): the name of the file that the audio was saved to
-            times (list[float]): a list of times that correspond to the initiation of the visemes
-            visemes (list[str]): a list of visemes that correspond to the words in the audio
+            (tuple): a tuple containing ``fname``, ``times``, and ``visemes``. fname is 
+            the path to the audio file, times is a list of times that correspond to the initiation
+            of the visemes, and visemes is a list of visemes that correspond to the words in the audio 
         '''
         if voice_id is None:
             voice_id = 'Justin'
@@ -138,9 +119,10 @@ class PollyTTS:
             fname (str): the name of the file that the audio and visemes were saved to
         
         returns:
-            fname (str): the name of the file that the audio was saved to
-            times (list[float]): a list of times that correspond to the initiation of the visemes
-            visemes (list[str]): a list of visemes that correspond to the words in the audio
+            (tuple): a tuple containing ``fname``, ``times``, and ``visemes``. fname is 
+            the path to the audio file, times is a list of times that correspond to the initiation
+            of the visemes, and visemes is a list of visemes that correspond to the words in the audio 
+ 
         
         raises:
             Exception: if the file does not exist
@@ -153,3 +135,22 @@ class PollyTTS:
             return fname, times, visemes
         else:
             raise Exception(f'phrase {fname} does not exist')
+        
+        
+VIS2IPA = {"p": "BILABIAL",
+            "f": "LABIODENTAL",
+            "T": "INTERDENTAL",
+            "s": "DENTAL_ALVEOLAR",
+            "t": "DENTAL_ALVEOLAR",
+            "S": "POSTALVEOLAR",
+            "r": "POSTALVEOLAR",
+            "k": "VELAR_GLOTTAL",
+            "i": "CLOSE_FRONT_VOWEL",
+            "u": "CLOSE_BACK_VOWEL",
+            "@": "MID_CENTRAL_VOWEL",
+            "a": "OPEN_FRONT_VOWEL",
+            "e": "OPEN_FRONT_VOWEL",
+            "E": "OPEN_FRONT_VOWEL",
+            "o": "OPEN_BACK_VOWEL",
+            "O": "OPEN_BACK_VOWEL",
+            "sil": "IDLE"}

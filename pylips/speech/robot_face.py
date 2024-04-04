@@ -12,8 +12,7 @@ from .system_tts import SystemTTS
 
 class RobotFace:
     '''
-    This class represents one robot that can be controlled. The face has several
-    embodied cues that can be controlled, including speech, gaze, and facial expressions.
+    The controllable interface for speech, gaze, and expressions. 
     
     Args:
         robot_name (str): the identity of the robot that should be speaking
@@ -54,11 +53,14 @@ class RobotFace:
 
     def say(self, content, wait=False):
         '''
-            Generates speech and visemes from a string of text using 
-            the tts backend described that RobotFace is initialized with.
+            Issues a speech command to the face.
+
+            This method will take in a string of text and convert it to speech. This method
+            may also shift ``self.channel`` to avoid competing with other connected faces.
 
             Args:
                 content (str): the text that the robot should speak
+                wait (bool): whether or not the function should wait for the speech to finish
         '''
 
         fname, times, visemes = self.tts.gen_audio_and_visemes(content, self.voice_id)
@@ -84,18 +86,31 @@ class RobotFace:
         while wait and pygame.mixer.Channel(self.channel).get_busy():
             pygame.time.wait(100)
 
-    def save_file(self, content, filename):
+    def save_file(self, content, tag):
         '''
-            The main method for the RobotFace class. This method will take in a string of text and
-            convert it to speech.
-            :param: content - the text that the robot should speak
+            Saves a speech file to the disk.
+
+            This method will take in a string of text and create the pkl and sound
+            files necessary to call ``say_file`` later. 
+
+            Args:
+                content (str): the text that the robot should speak
+                tag (str): the tag to refer to the file. This should be a string with
+                    no extensions or folder paths -- e.g., 'statement1' or 'question2'
         '''
-        self.tts.gen_audio_and_visemes(content, self.voice_id, filename)
+        self.tts.gen_audio_and_visemes(content, self.voice_id, tag)
          
 
-    def say_file(self, filename):
+    def say_file(self, tag):
+        '''
+            Plays a speech file that was saved to the disk.
 
-        fname, times, visemes = self.tts.get_audio_and_visemes(filename)
+            Args:
+                tag (str): the tag that was used to save the file. This should be a string with
+                    no extensions or folder paths -- e.g., 'statement1' or 'question2'
+        '''
+
+        fname, times, visemes = self.tts.get_audio_and_visemes(tag)
 
         request = { 
                 'name': self.name,
@@ -116,6 +131,15 @@ class RobotFace:
 
 
     def stop_speech(self):
+        '''
+        Cancels the current speech command.
+
+        If the robot is speaking, the robot will stop speaking and the visemes will stop playing.
+        If the robot is not speaking, this method will have no effect.
+
+        Args:
+            None
+        '''
         request = { 
                 'name': self.name,
                 'action_type': 'stop_speech',
@@ -128,8 +152,18 @@ class RobotFace:
     def look(self, x, y, z, time):
         '''
         Looks to a location in the face's reference frame.
-        x,y,z in mm
-        time in ms
+
+        The robots references frame has its origin at the center of the eyes, with the positive 
+        x-axis pointing to the right, the positive y-axis pointing up, and the positive z-axis 
+        pointing out of the face.
+
+        TODO: add a check to make sure the location is within the robot's range of motion
+
+        Args:
+            x (float): the x-coordinate in millimeters
+            y (float): the y-coordinate in millimeters
+            z (float): the z-coordinate in millimeters
+            time (int): the time in milliseconds that the robot should take to look to the location
         '''
         request = {
                 'name': self.name,
@@ -141,7 +175,14 @@ class RobotFace:
 
     def release_gaze(self):
         '''
-        allows robot to move eyes idly
+        Cancels the current gaze command.
+
+        If the robot is looking at a location, the robot will stop looking at that location and
+        return to its default gaze behaviors, looking idly in different directions. If the robot
+        is not looking at a location, this method will have no effect.
+
+        Args:
+            None
         '''
         request = {
             'name': self.name,
@@ -150,16 +191,44 @@ class RobotFace:
         self.io.emit('face_control', request)
 
     def express(self, aus, time):
+        '''
+        Activates a set of Action Units (AUs) on the face.
+
+        The robot's face is controlled by a set of Action Units (AUs) that can be activated to
+        create different facial expressions. This method will take in a dictionary of AUs that
+        maps the AU number to the intensity that the AU should be activated at. The method will
+        also take in a time in milliseconds to reach the requested AU state.
+
+        Action units can also be unilateral, meaning that they can be activated on one side of the
+        face. For example, AU1 is the inner brow raiser, and activating it on one side of the face
+        can be done by specifying 'AU01l' or 'AU01r' in the dictionary.
+
+        Args:
+            aus (dict): a dictionary of AUs that maps the AU number to the intensity that the AU should 
+                be activated at -- e.g., {'AU1': 1.0, 'AU2': 0.5, 'AU3': 0.0}
+            time (int): the time in milliseconds that the robot should take to reach the requested AU state
+        '''
         request = {
             'name': self.name,
             'action_type': 'express',
             'aus': aus,
             'time': time
         }
-        
+
         self.io.emit('face_control', request)
 
     def set_appearance(self, config):
+        '''
+        Changes the design of the face.
+
+        Different parameters can be passed to the face to change its appearance. This method will
+        take in a dictionary of configuration parameters that will be used to change the face's
+        appearance, and update the face to reflect the new configuration.
+
+        Args:
+            config (dict): a dictionary of configuration parameters that will be used to change the face's
+                appearance -- e.g., {'iris_color': '#00FF00', 'eye_size': 200, 'eye_height': 60}
+        '''
         request = {
             'name': self.name,
             'action_type': 'update_face',
@@ -169,6 +238,15 @@ class RobotFace:
         time.sleep(.3)
 
     def wait(self):
+        '''
+        Waits for the current speech command to finish.
+
+        This method will wait for the current speech command to finish before returning. If the robot
+        is not speaking, this method will return immediately.
+
+        Args:
+            None
+        '''
         while pygame.mixer.Channel(self.channel).get_busy():
             pygame.time.wait(100)
 
