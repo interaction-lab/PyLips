@@ -3,7 +3,7 @@ Creating Multiple Faces
 
 What's better than one PyLips face? Two PyLips faces!
 
-PyLips was designed to control multiple faces as once. This works by assigning
+PyLips was designed to control multiple faces at once. This works by assigning
 a unique name to each face, and then using that name to control the face. This
 is done by passing the name to the ``RobotFace`` constructor.
 

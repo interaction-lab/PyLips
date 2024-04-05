@@ -47,8 +47,8 @@ robot face object.
     cap = cv2.VideoCapture(0)
 
 From here, we will need to develop three functions for the core of our program: (1) getting the x,y,z location
-of the person's head in the real world, (2) drawing the detection boxes from mediapipe, and (3) what to do when we
-exit the program.
+of the person's head in the real world, (2) break out of the perception loop and exit the program , and (3) 
+drawing the detection boxes from mediapipe.
 
 
 Face Detection to X,Y,Z Coordinates
@@ -133,7 +133,7 @@ Putting It All Together
 Now that we have all the components, we can put them together in a loop. We will repeatedly read from
 the webcam, then we will process the image with mediapipe. If a face is detected, we will get the x,y,z
 location in the real world and update the robot's gaze. If the user has set the ``SHOW_FACE`` variable to
-``True``, we will show the face detection boxes on the screen. The program can be exited by pressing 'q'.
+``True``, we will show the face detection boxes on the screen. The program can be exited by pressing 'q'
 on the image window or by pressing control+c in the terminal.
 
 .. code-block:: python

@@ -30,3 +30,4 @@ env/
 .DS_Store
 Thumbs.db
 pylips_phrases/
+video_demo/

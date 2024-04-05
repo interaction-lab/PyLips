@@ -34,5 +34,6 @@ It should look like this:
 
 .. image:: ../_static/imgs/add_voices.png
 
-Once you press this, you can listen to the options and download the voices you like. Once you have done this,
-they will be automatically available for use. You can find their names by running the code above.
+Once you press this, you can listen to the options and download the voices you like. Once you have downloaded 
+a new voice, they will be automatically available for use. You can find their names by re-running the 
+``list_voices()`` function.

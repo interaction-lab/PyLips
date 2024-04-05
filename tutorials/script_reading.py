@@ -16,8 +16,8 @@ FARQUAAD: She's married to the muffin man.
 '''
 
 actors = {
-        'FARQUAAD': RobotFace(robot_name='FARQUAAD', voice_id=RobotFace().tts.voices[14]),
-        'GINGERBREAD MAN': RobotFace(robot_name='GINGERBREAD MAN', voice_id=RobotFace().tts.voices[142])
+        'FARQUAAD': RobotFace(robot_name='FARQUAAD', voice_id="com.apple.voice.compact.en-GB.Daniel"),
+        'GINGERBREAD MAN': RobotFace(robot_name='GINGERBREAD MAN', voice_id="com.apple.voice.premium.en-US.Zoe")
     }
 
 actors['FARQUAAD'].set_appearance(FacePresets.chili)

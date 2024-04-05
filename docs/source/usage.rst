@@ -23,10 +23,10 @@ PyLips Quickstart
 ----------------
 
 Here is a quick example to test your installation. This code will make your computer face say 
-"Hello, welcome to pylips!". The voice will be the default system voice, but this is something
+"Hello, welcome to pylips". The voice will be the default system voice, but this is something
 we can change later.
 
-First, we will have to start the PyLips server. This is a simple flask sever that can serve several
+First, we will have to start the PyLips server. This is a simple flask server that can serve several
 faces at the same time. To start the server, run the following command:
 
 .. code-block:: console
@@ -53,7 +53,7 @@ If all goes well, the face should have said the message!
 .. note::
 
    PyLips generates a folder in the directory you run it called ``pylips_phrases``. This folder is used to 
-   store the generated sound files. You may delete this folder at any time, but it will be recreated when needed.
+   store the generated sound files. You may delete this folder at any time, but it will be re-created when needed.
 
 
 More Features of PyLips

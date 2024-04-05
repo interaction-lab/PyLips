@@ -3,7 +3,7 @@ Two Robots Talking
 
 This tutorial walks you through using the ``RobotFace`` class to simulate two robots talking to each other.
 
-One strength of pylips is its ability to simulate multiple robots talking to each other. 
+One strength of PyLips is its ability to simulate multiple robots talking to each other. 
 This is useful for developing multi-robot systems, as well as for creating more complex 
 and interesting interactions between conversational agents. We will perform a simple pre-defined
 script from `a famous movie scene from Shrek (2001) <https://www.youtube.com/watch?v=mFl8nzZuExE&ab_channel=Movieclips>`_
@@ -33,7 +33,7 @@ First, we import the necessary classes and functions from PyLips, and write out 
     '''
 
 
-Next, we define the actors in the scene, and set their appearances and voices. This can be extended
+Next, we define the actors in the scene and set their appearances and voices. This can be extended
 to different numbers of characters, and different appearances and voices can be set for each character.
 You may change the voices based on the available voices on your system.
 
@@ -55,7 +55,7 @@ Once we have defined these characters, they will be available at the urls ``loca
 and ``localhost:8000/face/GINGERBREAD MAN``. Be sure to run ``python3 -m pylips.face.start`` to 
 connect to these faces.
 
-Finally, we iterate over the lines in the script. For each line, we split the line on the ':'character
+Finally, we iterate over the lines in the script. For each line, we split the line on the ':' character
 to obtain the actor that will speak the line, and the content of the line. We then use the ``say`` method
 of the actor to speak the content, and the ``wait`` method to wait for the speech to finish before moving on.
 

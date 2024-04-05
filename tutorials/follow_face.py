@@ -3,10 +3,11 @@ import mediapipe as mp
 import sys
 import numpy as np
 from pylips.speech import RobotFace
+from pylips.face import FacePresets
 import signal
 
-X_SCALE = 720
-Y_SCALE = 480
+X_SCALE = 920
+Y_SCALE = 680
 Z_SCALE = 100
 SHOW_FACE = True
 
@@ -14,6 +15,7 @@ mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
 
 robot = RobotFace()
+robot.set_appearance(FacePresets.high_contrast)
 
 # For webcam input:
 cap = cv2.VideoCapture(0)

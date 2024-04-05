@@ -4,7 +4,7 @@ Changing the Face Appearance
 Pylips allows you to change the appearance of the face!
 
 In order to do this, all you have to do is use the ``.set_appearance()`` method. For
-example, to change the color of the iris from pruple to green, all you need to do is:
+example, to change the color of the iris from purple to green, all you need to do is:
 
 .. code-block:: python
 
@@ -56,5 +56,4 @@ You can import then like this:
     face = RobotFace()
     face.set_appearance(FacePresets.gingerbreadman)
 
-You can also 
 

@@ -4,7 +4,7 @@ Changing the TTS Backend
 The text-to-speech (TTS) backend is the software that actually converts text to speech. The default 
 backend is your system's accessibility speech, which is simple, lightweight, and fast. However, 
 it is not necessarily the most realistic or flexible TTS engine. There are several cloud services
-that provide TTS services, such as `Amazon Polly <https://aws.amazon.com/polly/>`_. PyLips currently
+that provide TTS, such as `Amazon Polly <https://aws.amazon.com/polly/>`_. PyLips currently
 supports Amazon Polly, but we plan to add other services in the future.
 
 Integrating with Amazon Polly
@@ -24,8 +24,17 @@ Once you have set up the AWS CLI, you can use it by passing 'polly' to the ``Rob
     face = RobotFace(tts_method='polly')
 
 You can also pass different ``voice_ids`` as in the "changing the voice" example. A description
-of the different voices available can be found `here <https://docs.aws.amazon.com/polly/latest/dg/voicelist.html>`_.
+of the different voices for Polly are available `here <https://docs.aws.amazon.com/polly/latest/dg/voicelist.html>`_.
 
 In addition, Amazon Polly has many options to customize the TTS output. Specifically, Polly uses
 `SSML <https://docs.aws.amazon.com/polly/latest/dg/supportedtags.html>`_ to customize the output.
+SSML is a markup language that allows you to control the pitch, rate, volume, and other aspects of
+the speech. You can directly pass SSML to the ``say`` method:
+
+.. code-block:: python
+    
+    from pylips import RobotFace
+
+    face = RobotFace(tts_method='polly')
+    face.say('<prosody rate="slow">Hello, world!</prosody>')
 
