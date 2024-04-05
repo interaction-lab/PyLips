@@ -150,10 +150,9 @@ html_sidebars = {"**": ["globaltoc.html", "localtoc.html", "searchbox.html"]}
 html_theme_path = sphinx_material.html_theme_path()
 html_context = sphinx_material.get_html_context()
 html_theme = 'sphinx_rtd_theme'
-# html_logo = "_static/imgs/icon.svg"
-# html_favicon = "_static/imgs/favicon.ico"
-# html_title = (f"pyribs (stable - v{version})" if READTHEDOCS_VERSION == "stable"
-#               else f"pyribs ({READTHEDOCS_VERSION})")
+html_logo = "_static/imgs/pylips_text.svg"
+html_favicon = "_static/imgs/pylips.svg"
+html_title = f"PyLips (v{version})"
 
 # # material theme options (see theme.conf for more information)
 # html_theme_options = {
