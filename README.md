@@ -1,6 +1,6 @@
 # PyLips
 
-![The PyLips Logo](docs/source/_static/imgs/pylips_text.svg)
+![The PyLips Logo](docs/source/_static/imgs/pylips_text.png)
 
 **PyLips** is a Python-based interface for developing screen-based conversational agents.
 It is designed to make developing socially assistive robotics easier by providing a
