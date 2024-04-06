@@ -154,8 +154,10 @@ html_logo = "_static/imgs/pylips_text.svg"
 html_favicon = "_static/imgs/favicon.ico"
 html_title = f"PyLips (v{version})"
 
+#9e8da9
+
 # # material theme options (see theme.conf for more information)
-# html_theme_options = {
+html_theme_options = {
 #     "nav_title": "pyribs",
 #     "base_url": (f"https://docs.pyribs.org/{READTHEDOCS_LANGUAGE}/"
 #                  f"{READTHEDOCS_VERSION}/"),
@@ -190,7 +192,7 @@ html_title = f"PyLips (v{version})"
 #     #      "Development (rel)": "/sphinx-material/devel/",
 #     #  },
 #     "table_classes": ["plain"],
-# }
+}
 
 # html_last_updated_fmt = None
 
@@ -200,11 +202,11 @@ html_title = f"PyLips (v{version})"
 # # Add any paths that contain custom static files (such as style sheets) here,
 # # relative to this directory. They are copied after the builtin static files,
 # # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ["_static"]
+html_static_path = ["_static"]
 
-# html_css_files = [
-#     "custom.css",
-# ]
+html_css_files = [
+    "custom.css",
+]
 
 # # -- Options for HTMLHelp output ---------------------------------------
 
