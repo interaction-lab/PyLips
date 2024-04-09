@@ -13,6 +13,8 @@ bottom of the menu.
 
 .. figure:: ../_static/imgs/editor.png
     :align: center
+    
+    The PyLips facial expression editor.
 
 To send a facial expression to the robot, you can use the ``express()`` method of the ``RobotFace`` class. 
 The ``express()`` method takes a dictionary of FACS codes as input. The keys of the dictionary are the FACS codes
