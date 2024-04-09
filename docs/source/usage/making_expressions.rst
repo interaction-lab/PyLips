@@ -13,6 +13,7 @@ bottom of the menu.
 
 .. image:: ../_static/imgs/editor.png
     :align: center
+    :margin-bottom: 2em
 
 To send a facial expression to the robot, you can use the ``express()`` method of the ``RobotFace`` class. 
 The ``express()`` method takes a dictionary of FACS codes as input. The keys of the dictionary are the FACS codes
