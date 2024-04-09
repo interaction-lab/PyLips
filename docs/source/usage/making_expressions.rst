@@ -7,7 +7,12 @@ facial expressions uses the `Facial Action Coding System <https://en.wikipedia.o
 
 We provide a web page for you to try out different facial expressions and see how FACS codes change the face.
 You can access the web page at ``http://localhost:8080/editor`` after starting the PyLips server with the command
-``python3 -m pylips.face.start``.
+``python3 -m pylips.face.start``. You will see an interface with sliders for each FACS codes. You can move the sliders
+to see how the face changes. You can also select which side to apply the FACS code to by clicking the buttons on the
+bottom of the menu.
+
+.. image:: ../_static/editor.png
+    :align: center
 
 To send a facial expression to the robot, you can use the ``express()`` method of the ``RobotFace`` class. 
 The ``express()`` method takes a dictionary of FACS codes as input. The keys of the dictionary are the FACS codes
