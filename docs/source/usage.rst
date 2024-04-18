@@ -5,6 +5,10 @@ Usage
 
 Installing PyLips
 ------------
+.. note::
+
+   We have identified an error installing PyLips on python 3.12 on Mac OS. The current workaround
+   is to downgrade to python 3.11. We are working on a fix for this issue.
 
 You can install PyLips using pip. To install PyLips, run this command in your terminal:
 
