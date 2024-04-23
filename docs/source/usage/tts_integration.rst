@@ -10,8 +10,8 @@ supports Amazon Polly, but we plan to add other services in the future.
 Integrating with Amazon Polly
 ----------------
 
-To use Amazon Polly, you will need to sset up the AWS CLI for your system. This `Medium article
-<https://docs.aws.amazon.com/polly/latest/dg/getting-started.html>`_ does a great job of explaining
+To use Amazon Polly, you will need to `set up the AWS CLI<https://docs.aws.amazon.com/polly/latest/dg/getting-started.html>`_ for your system. This `Medium article
+<https://medium.com/@simonazhangzy/installing-and-configuring-the-aws-cli-7d33796e4a7c>`_ does a great job of explaining
 the steps you will need to take. Be sure to allow Polly access; Polly has a free trial for one year
 that allows you to perform TTS with up to 5 million characters per month for free.
 
