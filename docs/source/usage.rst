@@ -59,6 +59,8 @@ If all goes well, the face should have said the message!
    PyLips generates a folder in the directory you run it called ``pylips_phrases``. This folder is used to 
    store the generated sound files. You may delete this folder at any time, but it will be re-created when needed.
 
+Tell us how this process went by filling out `this survey <https://forms.gle/h9PtDMpZnvXqR9bf6>`_! We are looking to improve the installation process for PyLips!
+
 
 More Features of PyLips
 ----------------
