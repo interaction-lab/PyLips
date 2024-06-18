@@ -19,6 +19,11 @@ class SystemTTS:
         self.model = read_recognizer()
         self.voices = [voice.id for voice in self.engine.getProperty('voices')]
 
+        if platform == "linux" or platform == "linux2":
+            # linux requires special considerations for espeak-ng
+            result = os.popen('espeak-ng --voices').read()
+            self.voices = [line[4:20].strip() for line in result.split('\n')[1:-1]]
+            
     def list_voices(self):
         '''
         Lists all the voices that are available in the system's default TTS backend.
