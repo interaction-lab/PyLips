@@ -158,103 +158,14 @@ html_title = f"PyLips (v{version})"
 
 # # material theme options (see theme.conf for more information)
 html_theme_options = {
-#     "nav_title": "pyribs",
-#     "base_url": (f"https://docs.pyribs.org/{READTHEDOCS_LANGUAGE}/"
-#                  f"{READTHEDOCS_VERSION}/"),
-#     "repo_url": github_repo_url,
-#     "repo_name": "pyribs",
-#     "google_analytics_account": None,
-#     "html_minify": not DEV_MODE,
-#     "css_minify": not DEV_MODE,
-#     #  "logo_icon": "&#xe869",
-#     "repo_type": "github",
-#     # Needs to be 3 so that tutorials show up in sidebar.
-#     "globaltoc_depth": 3,
-#     "color_primary": "deep-purple",
-#     "color_accent": "purple",
-#     "touch_icon": None,
-#     "master_doc": False,
-#     "nav_links": [{
-#         "href": "index",
-#         "internal": True,
-#         "title": "Home"
-#     },],
-#     "heroes": {
-#         "index":
-#             "A bare-bones Python library for quality diversity optimization."
-#     },
-#     "version_dropdown": False,
-#     "version_json": None,
-#     #  "version_info": {
-#     #      "Release": "https://bashtage.github.io/sphinx-material/",
-#     #      "Development": "https://bashtage.github.io/sphinx-material/devel/",
-#     #      "Release (rel)": "/sphinx-material/",
-#     #      "Development (rel)": "/sphinx-material/devel/",
-#     #  },
-#     "table_classes": ["plain"],
+
 }
 
-# html_last_updated_fmt = None
-
-# html_use_index = True
-# html_domain_indices = True
-
-# # Add any paths that contain custom static files (such as style sheets) here,
-# # relative to this directory. They are copied after the builtin static files,
-# # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
 html_css_files = [
     "custom.css",
 ]
-
-# # -- Options for HTMLHelp output ---------------------------------------
-
-# # Output file base name for HTML help builder.
-# htmlhelp_basename = "ribsdoc"
-
-# # -- Options for LaTeX output ------------------------------------------
-
-# latex_elements = {
-#     # The paper size ("letterpaper" or "a4paper").
-#     #
-#     # "papersize": "letterpaper",
-
-#     # The font size ("10pt", "11pt" or "12pt").
-#     #
-#     # "pointsize": "10pt",
-
-#     # Additional stuff for the LaTeX preamble.
-#     #
-#     # "preamble": "",
-
-#     # Latex figure (float) alignment
-#     #
-#     # "figure_align": "htbp",
-# }
-
-# # Grouping the document tree into LaTeX files. List of tuples
-# # (source start file, target name, title, author, documentclass
-# # [howto, manual, or own class]).
-# latex_documents = [
-#     (master_doc, "ribs.tex", "pyribs Documentation", "ICAROS Lab", "manual"),
-# ]
-
-# # -- Options for manual page output ------------------------------------
-
-# # One entry per manual page. List of tuples
-# # (source start file, name, description, authors, manual section).
-# man_pages = [(master_doc, "ribs", "pyribs Documentation", [author], 1)]
-
-# # -- Options for Texinfo output ----------------------------------------
-
-# # Grouping the document tree into Texinfo files. List of tuples
-# # (source start file, target name, title, author,
-# #  dir menu entry, description, category)
-# texinfo_documents = [
-#     (master_doc, "ribs", "pyribs Documentation", author, "ribs",
-#      "One line description of project.", "Miscellaneous"),
-# ]
 
 # # -- Extension config -------------------------------------------------
 
@@ -265,11 +176,6 @@ autodoc_default_options = {
 }
 autosummary_generate = True
 
-# # Matplotlib plot directive.
-# plot_include_source = True
-# plot_formats = [("png", 90)]
-# plot_html_show_formats = False
-# plot_html_show_source_link = False
 
 # Intersphinx
 intersphinx_mapping = {
