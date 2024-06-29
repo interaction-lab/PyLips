@@ -381,6 +381,9 @@ t - float representing the milliseconds it should take to move to the current AU
 notViseme - flag to determine if the movement is a viseme. If it is, we only will modify the mouth shape
 */
 function move_face(t, notViseme){
+  
+  lockIdleUntil = new Date().getTime() + t + 50
+
     if(notViseme == undefined){
       notViseme = true
     }
