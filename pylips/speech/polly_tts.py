@@ -138,13 +138,16 @@ class PollyTTS:
         
         
 VIS2IPA = {"p": "BILABIAL",
+            "B": "BILABIAL",
             "f": "LABIODENTAL",
             "T": "INTERDENTAL",
             "s": "DENTAL_ALVEOLAR",
             "t": "DENTAL_ALVEOLAR",
             "S": "POSTALVEOLAR",
             "r": "POSTALVEOLAR",
+            "J": "VELAR_GLOTTAL",
             "k": "VELAR_GLOTTAL",
+
             "i": "CLOSE_FRONT_VOWEL",
             "u": "CLOSE_BACK_VOWEL",
             "@": "MID_CENTRAL_VOWEL",
@@ -153,4 +156,5 @@ VIS2IPA = {"p": "BILABIAL",
             "E": "OPEN_FRONT_VOWEL",
             "o": "OPEN_BACK_VOWEL",
             "O": "OPEN_BACK_VOWEL",
+
             "sil": "IDLE"}
