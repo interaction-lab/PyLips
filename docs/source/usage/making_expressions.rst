@@ -50,7 +50,7 @@ For the best results, please wait for the expression to complete and face to sto
 
 
 We also provide a few presets for you to use, which are stored in the ``pylips.face`` module. These expressions are
-based on `the basic emotions as described by Ekman <https://www.paulekman.com/universal-emotions/>`.
+based on `the basic emotions as described by Ekman <https://www.paulekman.com/universal-emotions/>`_.
 You can import them like this:
 
 .. code-block:: python
