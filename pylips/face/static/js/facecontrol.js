@@ -179,7 +179,7 @@ var params = {
   //15 Mouth Action Units
   var mouth = gui.addFolder( 'Mouth Action Units' );
   mouth.add( params, 'AU10', 0, 1 ).name('AU10 - Raise Upper Lip').step( 0.01 ).listen().onChange( function( value ) { au(10 , value, getSide()); move_face(1); getData()['AU10']=value; } );
-  mouth.add( params, 'AU11', 0, 1 ).name('AU11').step( 0.01 ).listen().onChange( function( value ) { au(11 , value); move_face(1); getData()['AU11']=value; } );
+  // mouth.add( params, 'AU11', 0, 1 ).name('AU11').step( 0.01 ).listen().onChange( function( value ) { au(11 , value); move_face(1); getData()['AU11']=value; } );
   mouth.add( params, 'AU12', 0, 1 ).name('AU12 - Lip Corners Out').step( 0.01 ).listen().onChange( function( value ) { au(12 , value, getSide()); move_face(1); getData()['AU12']=value; } );
   mouth.add( params, 'AU13', 0, 1 ).name('AU13 - Sharp Lip Puller').step( 0.01 ).listen().onChange( function( value ) { au(13 , value, getSide()); move_face(1); getData()['AU13']=value; } );
   mouth.add( params, 'AU14', 0, 1 ).name('AU14 - Dimpler').step( 0.01 ).listen().onChange( function( value ) { au(14 , value, getSide()); move_face(1); getData()['AU14']=value;});

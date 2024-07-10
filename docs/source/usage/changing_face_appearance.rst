@@ -47,13 +47,24 @@ All hex values can optionally include an alpha value. For example, ``#FF0000`` i
 is to set the alpha value to ``00``.
 
 We also provide a few presets for you to use, which are stored in the ``pylips.face`` module. 
-You can import then like this:
+You can import them like this:
 
 .. code-block:: python
 
+    from pylips.speech import RobotFace
     from pylips.face import FacePresets
 
     face = RobotFace()
     face.set_appearance(FacePresets.gingerbreadman)
 
 
+Here is a list of the currently-available face presets that we have implemented:
+
+.. code-block:: python
+    
+    FacePresets.black_screen
+    FacePresets.high_contrast 
+    FacePresets.default
+    FacePresets.chili
+    FacePresets.gingerbreadman
+    FacePresets.cutie

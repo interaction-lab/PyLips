@@ -45,3 +45,30 @@ the robot's right side.
 Another note is that the Action Units 10, 13, 14, 16, 18, 20, 23, 24, 25, 26, and 27 are used to make visemes for the robot's speech.
 So, if you use these Action Units in the ``express()`` method while the robot is talking, the robot may exhibit some 
 strange behaviors.
+
+For the best results, please wait for the expression to complete and face to stop moving.
+
+
+We also provide a few presets for you to use, which are stored in the ``pylips.face`` module. These expressions are
+based on `the basic emotions as described by Ekman <https://www.paulekman.com/universal-emotions/>`.
+You can import them like this:
+
+.. code-block:: python
+
+    from pylips.speech import RobotFace
+    from pylips.face import ExpressionPresets
+
+    face = RobotFace()
+    face.express(ExpressionPresets.happy, 1000)
+
+Here is a list of the currently-available emotion presets that we have implemented:
+
+.. code-block:: python
+
+    ExpressionPresets.default
+    ExpressionPresets.happy
+    ExpressionPresets.sad
+    ExpressionPresets.surprise
+    ExpressionPresets.fear
+    ExpressionPresets.angry
+    ExpressionPresets.disgust
