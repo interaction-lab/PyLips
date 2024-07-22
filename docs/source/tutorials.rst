@@ -12,6 +12,7 @@ create more complex behaviors.
    tutorials/conversation
    tutorials/follow
    tutorials/parroting
+   tutorials/teleoperate
 
 Keep in mind when you are designing your own application using PyLips that your project will be
 used by people. It may be just you, your friends, your classmates, or the whole world. It is important 
