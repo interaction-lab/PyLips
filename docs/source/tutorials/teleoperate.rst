@@ -92,14 +92,16 @@ differ, we will even them out to appear more realistic.
         return expression
 
 
+Initialize the PyLips face and the MediaPipe face landmarker model.
+
+.. code-block:: python    
+    
     base_options = python.BaseOptions(model_asset_path='face_landmarker_v2_with_blendshapes.task')
     options = vision.FaceLandmarkerOptions(base_options=base_options,
                                         output_face_blendshapes=True,
                                         output_facial_transformation_matrixes=True,
                                         num_faces=1)
     detector = vision.FaceLandmarker.create_from_options(options)
-
-
 
     face1 = RobotFace()
 
