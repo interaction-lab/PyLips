@@ -59,7 +59,7 @@ def even_out_expression(expression, au, threshold):
     return expression
 
 
-base_options = python.BaseOptions(model_asset_path='face_landmarker_v2_with_blendshapes.task')
+base_options = python.BaseOptions(model_asset_path='models/face_landmarker_v2_with_blendshapes.task')
 options = vision.FaceLandmarkerOptions(base_options=base_options,
                                        output_face_blendshapes=True,
                                        output_facial_transformation_matrixes=True,
