@@ -16,6 +16,18 @@ Prior to beginning this tutorial, ensure that you have run ``python3 -m pylips.f
 start the robot face. You may also need to install the ``MediaPipe`` library using
 ``python3 -m pip install MediaPipe``.
 
+The model for face detection needs to be downloaded to be used. 
+We provide the version we use in this tutorial at `this link <https://github.com/interaction-lab/PyLips/raw/main/tutorials/models/face_landmarker_v2_with_blendshapes.task>`_.
+Alternatively, you can download it with this command:
+
+.. code-block:: bash
+
+    # For users with wget (Linux)
+    wget https://github.com/interaction-lab/PyLips/raw/main/tutorials/models/face_landmarker_v2_with_blendshapes.task -O face_landmarker_v2_with_blendshapes.task
+    # For users with curl (Windows/Mac)
+    curl https://github.com/interaction-lab/PyLips/raw/main/tutorials/models/face_landmarker_v2_with_blendshapes.task -o face_landmarker_v2_with_blendshapes.task
+
+
 First, we will import all the necessary libraries for this tutorial.
 
 .. code-block:: python
