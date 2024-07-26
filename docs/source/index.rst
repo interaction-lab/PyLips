@@ -18,6 +18,12 @@ Github_.
 
 .. image:: _static/imgs/many_faces.png
 
+.. raw::
+   
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/i5yTNmkXz68?si=RYQoLdVElCLriMCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
 .. note::
 
    This project is under active development. Please raise an issue on github if you are having any trouble!
