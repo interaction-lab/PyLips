@@ -3,6 +3,11 @@ from flask_socketio import SocketIO, emit
 import sys
 import logging
 
+# host IP and port
+parser = argparse.ArgumentParser()
+parser.add_argument('--host', default='0.0.0.0', help='host IP address')
+parser.add_argument('--port', default=8000, type=int, help='port over which serve')
+
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*") #allow communication on the same IP (main use case for this package)
 
@@ -23,6 +28,6 @@ def handle_message(message):
     emit('face_control', message, broadcast=True)
 
 if __name__ == '__main__':
-    #TODO: add argparse for host and port
+    args = parser.parse_args()
     socketio.run(app, host='0.0.0.0', port=8000)
     
