@@ -30,5 +30,5 @@ def handle_message(message):
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    socketio.run(app, host='0.0.0.0', port=8000)
+    socketio.run(app, host=args.host, port=args.port)
     
