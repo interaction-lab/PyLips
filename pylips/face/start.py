@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 import sys
 import logging
+import argparse
 
 # host IP and port
 parser = argparse.ArgumentParser()
