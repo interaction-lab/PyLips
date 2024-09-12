@@ -1,6 +1,6 @@
 # PyLips
 
-[![Downloads](https://static.pepy.tech/badge/pylips)](https://pepy.tech/project/pylips)
+[![Downloads](https://static.pepy.tech/badge/pylips)](https://pepy.tech/project/pylips) [![PyPI version](https://badge.fury.io/py/pylips.svg)](https://badge.fury.io/py/pylips)
 
 ![The PyLips Logo](docs/source/_static/imgs/pylips_text.png)
 
