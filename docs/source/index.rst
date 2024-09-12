@@ -25,7 +25,7 @@ Github_.
 
 .. note::
 
-   This project is under active development. Please raise an issue on github if you are having any trouble!
+   This project is under active development. Fill out `this survey <https://forms.gle/h9PtDMpZnvXqR9bf6>`_ to provide feedback on using PyLips! Please raise an issue on github if you are having any trouble.
 
 Contents
 --------
