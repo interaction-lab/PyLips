@@ -1,5 +1,7 @@
 # PyLips
 
+[![Downloads](https://static.pepy.tech/badge/pylips)](https://pepy.tech/project/pylips)
+
 ![The PyLips Logo](docs/source/_static/imgs/pylips_text.png)
 
 **PyLips** is a Python-based interface for developing screen-based conversational agents.
