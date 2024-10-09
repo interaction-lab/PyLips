@@ -7,6 +7,11 @@ Welcome to PyLips's documentation!
 It is designed to make developing socially assistive robotics easier by providing a
 simple, expressive, and customizable framework for developing conversational agents.
 
+.. raw:: html
+
+    <div style="position: relative; max-width: 100%; height: auto; margin-bottom: 2em;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/6XCySZ2VXCE?si=hZ1mUQ4JhM7Gep0V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
 
 PyLips is easy to install, simple to use, and open-source.
 It comes ready to use with your system's speech synthesis tools, and
@@ -18,15 +23,9 @@ Github_.
 
 .. image:: _static/imgs/many_faces.png
 
-.. raw::
-   
-    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/i5yTNmkXz68?si=RYQoLdVElCLriMCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-
 .. note::
 
-   This project is under active development. Please raise an issue on github if you are having any trouble!
+   This project is under active development. Fill out `this survey <https://forms.gle/h9PtDMpZnvXqR9bf6>`_ to provide feedback on using PyLips! Please raise an issue on github if you are having any trouble.
 
 Contents
 --------
