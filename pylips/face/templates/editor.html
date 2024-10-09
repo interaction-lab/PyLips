@@ -1,119 +1,76 @@
 <html>
-	<head>
-		<title>CoRDial Face</title>
-		<style>
-		html { overflow-x: hidden; overflow-y: hidden; }
-        svg {z-index: -10;}
-		</style>
-	</head>
-	<body>
-		<script src="{{ url_for('static', filename='js/socketio.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/two.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/tween.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/svgFace.js') }}"></script>
 
-        <script src="{{ url_for('static', filename='js/dat.gui.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/facecontrol.js') }}"></script>
+<head>
+	<title>CoRDial Face</title>
+	<style>
+		canvas {
+       	 z-index: -1;
+    	}
+	</style>
+</head>
+
+<body>
+	<script src="{{ url_for('static', filename='js/socketio.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/canvasFace.js') }}"></script>
+
+	<script src="{{ url_for('static', filename='js/dat.gui.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/facecontrol.js') }}"></script>
 
 
 
-		<script>
-			const name = document.title
-			var socket = io();
-	
-			socket.on('face_control', function(msg){
-	
-				if (msg.action_type == 'look') {
-					lookat(msg.location[0], msg.location[1], msg.location[2], msg.time)
-					looking = true //stops the idle movements
+	<script>
+		const name = document.title
+		var socket = io();
+
+		socket.on('face_control', function (msg) {
+			console.log('message to ' + msg.name + ' : ' + msg.action_type);
+			if (msg.name != name) {
+				return
+			}
+
+			if (msg.action_type == 'say') {
+				play_visemes(msg.visemes, 55, msg.times)
+			}
+
+			if (msg.action_type == 'stop_speech') {
+				stop_visemes()
+			}
+
+			if (msg.action_type == 'look') {
+				console.log('Calling lookat');
+				lookat(msg.location[0], msg.location[1], msg.location[2], msg.time)
+				looking = true //stops the idle movements
+			}
+
+			if (msg.action_type == 'release_gaze') {
+				looking = false //starts the idle movements
+			}
+
+			if (msg.action_type == 'express') {
+				time = msg.time
+				for (var au_cmd in msg.aus) {
+					au_number = parseInt(au_cmd.slice(2))
+					// if the last character is 'l' or 'r', it's a side command
+					// if it is a number, au() will assume both sides
+					side = au_cmd.slice(-1)
+					degree = parseFloat(msg.aus[au_cmd])
+					au(au_number, degree, side, time)
 				}
-	
-				if (msg.action_type == 'release_gaze') {
-					looking = false //starts the idle movements
-				}
-	
-	
-				if(msg.action_type == 'update_face'){
-	
-					var element = document.getElementById("face-div");
-					element.parentNode.removeChild(element);
-					
-					default_params = {
-						'background_color': '#D7E4F5',
-						'eyeball_color': '#ffffff',
-						'iris_color': '#800080',
-						'eye_size': 150,
-						'eye_height': 80,
-						'eye_separation': 400,
-						'iris_size': 80,
-						'pupil_scale': .7,
-						'eye_shine': true,
-						'eyelid_color': '#D7E4F5',
-						'nose_color': '#ff99cc',
-						'nose_vertical_position': 10,
-						'nose_width': 0,
-						'nose_height': 0,
-						'mouth_color': '#2c241b',
-						'mouth_width': 450,
-						'mouth_height': 20,
-						'mouth_thickness': 18,
-						'brow_color': '#2c241b',
-						'brow_width': 130,
-						'brow_height': 120,
-						'brow_thickness': 18
+			}
+
+			if (msg.action_type == 'update_face') {
+
+				Object.keys(params).forEach(key => {
+					if (msg.configuration.hasOwnProperty(key)) {
+						params[key] = msg.configuration[key]
 					}
-					
-					//replace default values with user's values
-					var face_params = {};
-					Object.keys(default_params).forEach(key => {
-						if(msg.configuration.hasOwnProperty(key)){
-							face_params[key] = msg.configuration[key]
-						}
-						else {
-							face_params[key] = default_params[key]
-						}
-					});
-	
-					startFace(face_params.background_color, //background color
-						'','', //robot name, ros_master_uri
-						.009, //cm per pixel
-						0, //viseme compression factor
-						//eyes
-						face_params.eyeball_color, face_params.iris_color, face_params.eye_size, face_params.eye_height,
-						face_params.eye_separation, face_params.iris_size, face_params.pupil_scale, face_params.eye_shine, //eyes (white_color, iris_color, size, height, separation, iris_size, pupil_scale, pupil_shape)
-						//lids (no changes for now)
-						face_params.eyelid_color,150,130,.4, //eyelids (width, height, arch)
-						//nose
-						face_params.nose_color, 0,face_params.nose_vertical_position,
-						face_params.nose_width,face_params.nose_height, //nose (color, x, y, width, height)
-						//mouth
-						face_params.mouth_color, 15, -60, face_params.mouth_width, face_params.mouth_height, face_params.mouth_thickness, 2, 8, 100.2, 1000.2, //mouth (color, x, y, width, height, thickness, opening, dimple_size, ulip_h_scale, llip_h_scale)
-						face_params.brow_color, face_params.brow_width, face_params.brow_height, face_params.brow_thickness, 11 //brows (color, width, height, thickness, innersize)
-						)
+				});
+			}
 
+		});
 
-				}
-	
-	
-	
-	
-	
-			});
-	
-		</script>
+	</script>
 
-		<script>
-		  startFace('#D7E4F5', //background color
-		  'DB1','', //robot name, ros_master_uri
-		  .009, //cm per pixel
-		  0, //viseme compression factor
-		  '#ffffff', '#800080',150,80,400, 80, .7,"round", //eyes (white_color, iris_color, size, height, separation, iris_size, pupil_scale, pupil_shape)
-		  '#D7E4F5', 150,130,.4,  //eyelids (width, height, arch)
-		  '#ff99cc', 0,10,0,0, //nose (color, x, y, width, height)
-		  '#2c241b', 15,-60,450,20,18,2, 8, 100.2, 1000.2, //mouth (color, x, y, width, height, thickness, opening, dimple_size, ulip_h_scale, llip_h_scale)
-		  '#2c241b', 130,120,18,11 //brows (color, width, height, thickness, innersize)
-		  )
-		</script>
-        
-	</body>
+</body>
+
 </html>
