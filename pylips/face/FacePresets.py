@@ -19,7 +19,7 @@ black_screen = {
             'mouth_thickness': 18,
             'brow_color': '#000000',
             'brow_width': 150,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 20
 }
 
@@ -44,7 +44,7 @@ high_contrast = {
             'mouth_thickness': 25,
             'brow_color': '#000000',
             'brow_width': 110,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 20
 }
 
@@ -52,7 +52,7 @@ default = {
             'background_color': '#D7E4F5',
             'eyeball_color': '#ffffff',
             'iris_color': '#800080',
-            'eye_size': 150,
+            'eye_size': 140,
             'eye_height': 80,
             'eye_separation': 400,
             'iris_size': 80,
@@ -60,7 +60,7 @@ default = {
             'eye_shine': True,
             'eyelid_color': '#D7E4F5',
             'nose_color': '#ff99cc',
-            'nose_vertical_position': 10,
+            'nose_vertical_position': -40,
             'nose_width': 0,
             'nose_height': 0,
             'mouth_color': '#2c241b',
@@ -69,7 +69,7 @@ default = {
             'mouth_thickness': 18,
             'brow_color': '#2c241b',
             'brow_width': 130,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 18
         }
 
@@ -95,7 +95,7 @@ chili = {
             'mouth_thickness': 18,
             'brow_color': '#222222',
             'brow_width': 150,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 20
         }
 
@@ -120,7 +120,7 @@ gingerbreadman = {
             'mouth_thickness': 18,
             'brow_color': '#7bbac9',
             'brow_width': 70,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 20
         }
 
@@ -145,6 +145,6 @@ cutie = {
             'mouth_thickness': 18,
             'brow_color': '#222222',
             'brow_width': 110,
-            'brow_height': 120,
+            'brow_height': 210,
             'brow_thickness': 20
         }

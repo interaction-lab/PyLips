@@ -99,6 +99,6 @@ setup(
     python_requires=">=3.8.0",
     test_suite="tests",
     url="https://github.com/interaction-lab/PyLips",
-    version="0.0.13",
+    version="0.0.14",
     zip_safe=False,
 )
