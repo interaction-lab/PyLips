@@ -97,77 +97,81 @@ const faceState = {
 Face Drawing Functions
 
 */
+
+function getControlPoints(ax,ay, bx,by, cx,cy, tension=.33){
+    a1 = Math.atan2(ay-by, ax-bx)
+    a2 = Math.atan2(cy-by, cx-bx)
+
+    d1 = Math.sqrt((ax - bx)**2 + (ay-by)**2)
+    d2 = Math.sqrt((cx - bx)**2 + (cy-by)**2)
+
+    mid = (a1 + a2) / 2;
+
+    if (d1 < 0.0001 || d2 < 0.0001) {
+        leftx = rightx = 0
+        lefty = righty = 0
+        return {leftx, lefty, rightx, righty}; // maybe 0,0?
+      }
+    
+      d1 *= tension; 
+      d2 *= tension;
+    
+      if (a2 < a1) {
+        mid += 3.14 / 2;
+      } else {
+        mid -= 3.14/2;
+      }
+    
+    leftx = Math.cos(mid) * d1;
+    lefty = Math.sin(mid) * d1;
+
+    mid -= Math.PI;
+
+    rightx = Math.cos(mid) * d2;
+    righty = Math.sin(mid) * d2;
+
+    return {leftx, lefty, rightx, righty}
+}
 function interpolateSpline(ctx, points, thickness, color) {
     ctx.strokeStyle = color;
     ctx.lineWidth = thickness;
     ctx.lineCap = 'round'; // Set the line cap style to round
 
-    // Validate the input
-    if (points.length !== 6 && points.length !== 8) {
-        throw new Error("Invalid number of points: use either 3 points (6 values) or 4 points (8 values)");
-    }
+    ctx.beginPath();
 
     const numPoints = points.length / 2;
 
-    // Begin the path
-    ctx.beginPath();
+    for (let i = 0; i < numPoints; i++) {
 
-    // Loop through control points
-    for (let i = 0; i < numPoints - 1; i++) {
-        const p0 = [points[i * 2], points[i * 2 + 1]]; // Point i
-        const p1 = [points[(i + 1) * 2], points[(i + 1) * 2 + 1]]; // Point i+1
+        px = points[2*i]; py = points[2*i +1] 
 
-        // Calculate tangents for p0 and p1
-        let tangent0, tangent1;
+        const prev_i = Math.max(i - 1, 0);
+        const next_i = Math.min(i + 1, numPoints -1);
 
+        ax = points[2*prev_i]; ay = points[2*prev_i + 1]
+        cx = points[2*next_i]; cy = points[2*next_i + 1]
+
+        cp = getControlPoints(ax,ay, px,py, cx,cy);
+
+        
         if (i === 0) {
-            // For the first point, average with the next point
-            tangent0 = [(p1[0] - p0[0]) / 2, (p1[1] - p0[1]) / 2];
+            ctx.moveTo(px, py); // Move to the first point
         } else {
-            tangent0 = [(p1[0] - points[(i - 1) * 2]) / 2, (p1[1] - points[(i - 1) * 2 + 1]) / 2];
+            // ctx.bezierCurveTo(prevrightx, prevrighty, cp.leftx, cp.lefty, px, py);
+            // console.log(prevx, prevrightx, cp.leftx, px)
+            ctx.bezierCurveTo(prevx + prevrightx, prevy + prevrighty, px+cp.leftx, py+cp.lefty, px, py);
         }
 
-        if (i === numPoints - 2) {
-            // For the last point, average with the previous point
-            tangent1 = [(p1[0] - p0[0]) / 2, (p1[1] - p0[1]) / 2];
-        } else {
-            tangent1 = [(points[(i + 2) * 2] - p0[0]) / 2, (points[(i + 2) * 2 + 1] - p0[1]) / 2];
-        }
+        prevrightx = cp.rightx
+        prevrighty = cp.righty
+        prevx = px
+        prevy = py
 
-        // Draw the Hermite curve segment
-        const steps = 16; // Number of interpolation steps
-        for (let t = 0; t <= 1; t += 1 / steps) {
-            const t2 = t * t;
-            const t3 = t2 * t;
-
-            // Cubic Hermite spline formula
-            const x = (2 * t3 - 3 * t2 + 1) * p0[0] +
-                (t3 - 2 * t2 + t) * tangent0[0] +
-                (-2 * t3 + 3 * t2) * p1[0] +
-                (t3 - t2) * tangent1[0];
-
-            const y = (2 * t3 - 3 * t2 + 1) * p0[1] +
-                (t3 - 2 * t2 + t) * tangent0[1] +
-                (-2 * t3 + 3 * t2) * p1[1] +
-                (t3 - t2) * tangent1[1];
-
-            if (t === 0) {
-                ctx.moveTo(x, y); // Move to the first point
-            } else {
-                ctx.lineTo(x, y);
-            }
-        }
     }
 
-    // Stroke the path
     ctx.stroke();
+
 }
-
-
-
-
-
-
 
 
 
