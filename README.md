@@ -60,3 +60,14 @@ face.say("Hello, welcome to pylips!")
 If all goes well, the face should have said the message!
 
 
+If you use PyLips in an academic publication, please use this
+```
+@inproceedings{dennler2024pylips,
+  title={PyLips: an Open-Source Python Package to Expand Participation in Embodied Interaction},
+  author={Dennler, Nathaniel Steele and Torrence, Evan and Yoo, Uksang and Nikolaidis, Stefanos and Mataric, Maja},
+  booktitle={Adjunct Proceedings of the 37th Annual ACM Symposium on User Interface Software and Technology},
+  pages={1--4},
+  year={2024}
+}
+```
+
