@@ -243,12 +243,6 @@ function interpolateSpline(ctx, points, thickness, color) {
 
 
 
-
-
-
-
-
-
 // Helper function to create an eye with lookAt feature
 function drawEye(side, params, faceState, ctx) {
 

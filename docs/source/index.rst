@@ -27,6 +27,18 @@ Github_.
 
    This project is under active development. Fill out `this survey <https://forms.gle/h9PtDMpZnvXqR9bf6>`_ to provide feedback on using PyLips! Please raise an issue on github if you are having any trouble.
 
+If you are using PyLips in an academic publication, please use this:
+
+.. code-block:: console
+
+   @inproceedings{dennler2024pylips,
+      title={PyLips: an Open-Source Python Package to Expand Participation in Embodied Interaction},
+      author={Dennler, Nathaniel Steele and Torrence, Evan and Yoo, Uksang and Nikolaidis, Stefanos and Mataric, Maja},
+      booktitle={Adjunct Proceedings of the 37th Annual ACM Symposium on User Interface Software and Technology},
+      pages={1--4},
+      year={2024}
+    }
+
 Contents
 --------
 
