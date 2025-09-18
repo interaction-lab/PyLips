@@ -35,3 +35,4 @@ pylips_phrases/
 video_demo/
 uist_demo/
 tutorials/face_landmarker_v2_with_blendshapes.task 
+tests/test_*

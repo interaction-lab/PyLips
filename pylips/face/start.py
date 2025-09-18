@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
-import sys
-import logging
 import argparse
 
 # host IP and port
@@ -27,6 +25,22 @@ def editor():
 def handle_message(message):
     print(f"received to {message['name']}: {message['action_type']}")
     emit('face_control', message, broadcast=True)
+
+@socketio.on('play_audio_file')
+def handle_play_audio(data):
+    """Send audio file data to browser for playback"""
+    filename = data.get('filename')
+    target_name = data.get('name', 'default')  # Which face should play the audio
+    audio_base64 = data.get('audio_data')
+        
+        # Send audio data to the specific client or broadcast to all
+    emit('play_audio', {
+        'name': target_name,
+        'filename': filename,
+        'audio_data': audio_base64,
+        'mime_type': 'audio/wav'
+    }, broadcast=True)
+    
 
 if __name__ == '__main__':
     args = parser.parse_args()

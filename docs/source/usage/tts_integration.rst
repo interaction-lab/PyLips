@@ -19,7 +19,7 @@ Once you have set up the AWS CLI, you can use it by passing 'polly' to the ``Rob
 
 .. code-block:: python
 
-    from pylips import RobotFace
+    from pylips.speech import RobotFace
 
     face = RobotFace(tts_method='polly')
 
@@ -33,7 +33,7 @@ the speech. You can directly pass SSML to the ``say`` method:
 
 .. code-block:: python
     
-    from pylips import RobotFace
+    from pylips.speech import RobotFace
 
     face = RobotFace(tts_method='polly')
     face.say('<prosody rate="slow">Hello, world!</prosody>')

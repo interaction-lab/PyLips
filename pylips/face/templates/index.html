@@ -6,6 +6,7 @@
     <title>{{ face_name | default('Default') }}</title>
     <script src="{{ url_for('static', filename='js/socketio.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/canvasFace.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
     
     <script>
         const name = document.title
@@ -57,6 +58,55 @@
             }
 
         });
+
+        // Handle audio playback from server
+        socket.on('play_audio', function(msg){
+            console.log('Received audio for:', msg.name);
+            
+            // Check if this audio is for this face
+            if(msg.name != name && msg.name != 'all'){
+                return;
+            }
+            
+            // Create audio element and play
+            const audioBlob = base64ToBlob(msg.audio_data, msg.mime_type);
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            
+            audio.play().then(() => {
+                console.log('Playing audio:', msg.filename);
+            }).catch(error => {
+                console.error('Error playing audio:', error);
+            });
+            
+            // Clean up URL after playing
+            audio.addEventListener('ended', () => {
+                URL.revokeObjectURL(audioUrl);
+            });
+        });
+
+        // Helper function to convert base64 to blob
+        function base64ToBlob(base64Data, mimeType) {
+            const byteCharacters = atob(base64Data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            return new Blob([byteArray], {type: mimeType});
+        }
+
+        // Utility functions for external use
+        window.playAudioFile = function(filename, targetName = name) {
+            socket.emit('play_audio_file', {
+                filename: filename,
+                name: targetName
+            });
+        };
+
+        window.getAudioList = function() {
+            socket.emit('request_audio_list');
+        };
 
     </script>
 

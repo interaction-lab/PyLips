@@ -1,8 +1,6 @@
+import base64
 import socketio
-import boto3
 from contextlib import closing
-import json
-import pickle
 import pygame
 import time
 import os
@@ -129,6 +127,42 @@ class RobotFace:
         self.io.emit('face_control', request)
         pygame.mixer.Channel(self.channel).play(sound)
 
+
+    def stream_file_to_browser(self, tag):
+        '''
+            Streams an audio file directly to the browser for playback.
+            
+            This method sends the audio file data to the browser via WebSocket,
+            where it will be played automatically without going through pygame.
+            
+            Args:
+                filename (str): the name of the audio file to stream (should be in pylips_phrases directory)
+        '''
+        fname, times, visemes = self.tts.get_audio_and_visemes(tag)
+        print(f"Streaming {fname} to browser")
+
+        # open the file and encode it as base64 to send to the browser
+        try:
+            with open(fname, 'rb') as audio_file:
+                audio_data = audio_file.read()
+                audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+        except Exception as e:
+            print(f"Error reading audio file: {str(e)}. Are you sure you generated it?")
+            return
+        
+        self.io.emit('play_audio_file', {
+            'filename': fname,
+            'name': self.name,
+            'audio_data': audio_base64,
+            'mime_type': 'audio/wav'
+        })
+
+        self.io.emit('face_control', {
+            'name': self.name,
+            'action_type': 'say',
+            'visemes': visemes,
+            'times': times,
+        })
 
     def stop_speech(self):
         '''
