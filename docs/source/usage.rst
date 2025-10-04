@@ -44,8 +44,8 @@ For now, just open a browser and go to ``http://localhost:8000/face`` to see the
 .. note::
    When you first load up the face, you will see a popup that asks you to interact with the webpage.
    Interacting with the webpage is required by many browsers to allow audio to be played through the webpage.
-   However, if your setup does not require audio to be played through the webpage, the audio unlock overlay 
-   will be disabled if you passed the ``--skip-audio-unlock`` flag when starting the server.
+   If your setup does not require webpage audio, you can turn off the audio unlock overlay
+   by passing the ``--skip-audio-unlock`` flag when running ``pylips.face.start``.
 
 Now open a new terminal tab and run the following code:
 
