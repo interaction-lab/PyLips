@@ -67,7 +67,7 @@ extras_require = {
 
 setup(
     author="Interaction Lab",
-    author_email="dennler@usc.edu",
+    author_email="dennler@mit.edu",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
