@@ -1,0 +1,66 @@
+#audio-unlock-overlay { position: fixed; inset:0; background: radial-gradient(circle at 30% 30%, rgba(34,34,34,.55) 0%, rgba(0,0,0,.65) 70%); display:flex; align-items:center; justify-content:center; z-index:9999; color:#eee; font-family: system-ui, Arial, sans-serif; backdrop-filter: blur(4px); opacity:1; transition: opacity .6s ease; will-change: opacity; }
+#audio-unlock-overlay.fade-out { opacity:0; pointer-events:none; }
+    #audio-unlock-overlay .unlock-card { 
+        position: relative;
+        background: linear-gradient(145deg, #2c7abb 0%, #126cc0 40%, #0060cd 70%, #0f9edb 100%);
+        padding:32px 40px; 
+        border:1px solid rgba(255,255,255,0.28); 
+        border-radius:22px; 
+        max-width:420px; 
+        text-align:center; 
+        box-shadow:0 10px 32px -6px rgba(0,70,160,.55), 0 4px 16px -2px rgba(0,90,200,.45), 0 0 0 1px rgba(255,255,255,0.08) inset; 
+        backdrop-filter: blur(10px) saturate(140%);
+        color:#f5faff;
+    }
+    #audio-unlock-overlay .unlock-card:before {
+        content:""; 
+        position:absolute; 
+        inset:0; 
+        border-radius:inherit; 
+        background: radial-gradient(circle at 25% 15%, rgba(255,255,255,0.35), rgba(255,255,255,0) 60%),
+                    linear-gradient(160deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+        pointer-events:none; 
+        mix-blend-mode:screen; 
+    }
+#audio-unlock-overlay h2 { margin:0 0 12px; font-size:1.55rem; letter-spacing:.5px; }
+#audio-unlock-overlay p { margin:0 0 20px; font-size:.95rem; line-height:1.4; opacity:.9; }
+    #audio-unlock-overlay button { 
+        background: linear-gradient(135deg, #ff34c5 0%, #ff1f9b 45%, #ff4fd1 100%); 
+        border:none; 
+        color:#fff; 
+        font-size:1rem; 
+        font-weight:600; 
+        padding:14px 30px; 
+        border-radius:48px; 
+        cursor:pointer; 
+        letter-spacing:.6px; 
+        box-shadow:0 6px 18px -4px rgba(255,55,180,.55), 0 2px 8px -2px rgba(255,55,200,.4); 
+        transition: all .28s cubic-bezier(.4,.2,.2,1); 
+        position:relative; 
+        overflow:hidden;
+    }
+    #audio-unlock-overlay button:before { 
+        content:""; 
+        position:absolute; 
+        top:0; left:-30%; 
+        width:60%; height:100%; 
+        background: linear-gradient(75deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.65) 45%, rgba(255,255,255,0) 90%); 
+        transform: skewX(-25deg) translateX(-100%); 
+        transition: transform .8s ease; 
+        pointer-events:none;
+    }
+    #audio-unlock-overlay button:hover:before { 
+        transform: skewX(-25deg) translateX(220%); 
+    }
+    #audio-unlock-overlay button:hover, #audio-unlock-overlay button:focus-visible { 
+        outline:none; 
+        box-shadow:0 10px 26px -6px rgba(255,55,180,.6), 0 4px 14px -4px rgba(255,55,200,.5); 
+        transform: translateY(-2px); 
+        filter: brightness(1.07);
+    }
+    #audio-unlock-overlay button:active { 
+        transform: translateY(0); 
+        box-shadow:0 4px 14px -4px rgba(255,55,180,.55); 
+        filter: brightness(.95);
+    }
+@media (max-width:600px){ #audio-unlock-overlay .unlock-card { margin:0 22px; padding:28px 28px; } }

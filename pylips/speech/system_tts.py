@@ -4,6 +4,13 @@ import soundfile as sf
 import pickle
 import os
 
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    category=FutureWarning,
+    message=r"You are using `torch\.load` with `weights_only=False`.*"
+)
 from sys import platform
 
 class SystemTTS:

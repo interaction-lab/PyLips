@@ -41,6 +41,12 @@ This will start the server on port 8000. Do not worry about the warning message,
 still work. You can connect any web browser to the urls printed, even across computers on the local network.
 For now, just open a browser and go to ``http://localhost:8000/face`` to see the face.
 
+.. note::
+   When you first load up the face, you will see a popup that asks you to interact with the webpage.
+   Interacting with the webpage is required by many browsers to allow audio to be played through the webpage.
+   However, if your setup does not require audio to be played through the webpage, the audio unlock overlay 
+   will be disabled if you passed the `--skip-audio-unlock` flag when starting the server.
+
 Now open a new terminal tab and run the following code:
 
 .. code-block:: python

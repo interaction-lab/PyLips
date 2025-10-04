@@ -17,7 +17,7 @@ app.static_folder = 'static'
 @app.route('/face')
 @app.route('/face/<face_name>')
 def index(face_name='default'):
-    # Pass a flag to template to control overlay rendering
+    # Optionally disable the popup that encourages a user to interact with the webpage
     disable_overlay = getattr(app, 'disable_audio_overlay', False)
     return render_template('index.html', face_name=face_name, disable_audio_overlay=disable_overlay)
 
@@ -37,7 +37,7 @@ def handle_play_audio(data):
     target_name = data.get('name', 'default')  # Which face should play the audio
     audio_base64 = data.get('audio_data')
         
-        # Send audio data to the specific client or broadcast to all
+    # Send audio data to the specific client or broadcast to all
     emit('play_audio', {
         'name': target_name,
         'filename': filename,
