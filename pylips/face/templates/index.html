@@ -60,29 +60,132 @@
         });
 
         // Handle audio playback from server
+        // --- Simple Audio Unlock (discard pre-unlock audio) --- //
+        let audioUnlocked = false;
+        let pylipsAudioEl = null;       // persistent audio element
+        let currentObjectUrl = null;    // track for cleanup
+        const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA='; // tiny silence
+
+        function initPersistentAudio(){
+            if(pylipsAudioEl) return;
+            pylipsAudioEl = document.createElement('audio');
+            pylipsAudioEl.id = 'pylips-audio';
+            pylipsAudioEl.playsInline = true; // iOS inline playback
+            pylipsAudioEl.preload = 'auto';
+            pylipsAudioEl.style.display = 'none';
+            // Warm with silence so element becomes eligible for later dynamic src swaps
+            pylipsAudioEl.src = SILENT_WAV;
+            document.body.appendChild(pylipsAudioEl);
+        }
+
+        async function warmAudioElement(){
+            if(!pylipsAudioEl) initPersistentAudio();
+            try {
+                pylipsAudioEl.muted = true; // safe warm-up
+                pylipsAudioEl.currentTime = 0;
+                await pylipsAudioEl.play().catch(()=>{});
+                pylipsAudioEl.pause();
+                pylipsAudioEl.muted = false;
+                pylipsAudioEl.currentTime = 0;
+            } catch(e){
+                console.debug('Warm audio element failed (may still proceed):', e);
+            }
+        }
+
+        async function unlockAudio(){
+            if(audioUnlocked) return;
+            try {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if(Ctx){
+                    const ctx = new Ctx();
+                    if(ctx.state === 'suspended') await ctx.resume();
+                    // Prime with a silent buffer (satisfies some mobile policies)
+                    const buffer = ctx.createBuffer(1, 1, 22050);
+                    const src = ctx.createBufferSource();
+                    src.buffer = buffer;
+                    src.connect(ctx.destination);
+                    src.start(0);
+                }
+            } catch(e){
+                console.debug('AudioContext priming failed (may still be okay):', e);
+            }
+            audioUnlocked = true;
+            document.body.classList.add('audio-unlocked');
+            const overlay = document.getElementById('audio-unlock-overlay');
+            if(overlay){
+                overlay.classList.add('fade-out');
+                setTimeout(()=> overlay.remove(), 350);
+            }
+            // Initialize & warm persistent audio element AFTER gesture
+            initPersistentAudio();
+            await warmAudioElement();
+        }
+
+        // Incoming audio: simplified playback (persistent element). Uses data URI for small clips, Blob URL for large.
         socket.on('play_audio', function(msg){
-            console.log('Received audio for:', msg.name);
-            
-            // Check if this audio is for this face
-            if(msg.name != name && msg.name != 'all'){
+            console.log('[Audio] Event for:', msg.name, 'file:', msg.filename);
+            if(msg.name != name && msg.name != 'all') return;
+            if(!audioUnlocked){
+                console.log('[Audio] Discarded (locked). Filename:', msg.filename);
                 return;
             }
-            
-            // Create audio element and play
-            const audioBlob = base64ToBlob(msg.audio_data, msg.mime_type);
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            
-            audio.play().then(() => {
-                console.log('Playing audio:', msg.filename);
-            }).catch(error => {
-                console.error('Error playing audio:', error);
-            });
-            
-            // Clean up URL after playing
-            audio.addEventListener('ended', () => {
-                URL.revokeObjectURL(audioUrl);
-            });
+            if(!msg.audio_data){
+                console.warn('[Audio] No audio_data present; cannot play.');
+                return;
+            }
+
+            if(!pylipsAudioEl) initPersistentAudio();
+
+            const mime = msg.mime_type || 'audio/wav';
+            const base64Len = msg.audio_data.length;
+            console.log('[Audio] Base64 length:', base64Len);
+
+            const SMALL_THRESHOLD = 600000; // ~450 KB raw audio equivalent; tweak as needed
+
+            // Revoke any previous object URL before replacing
+            if(currentObjectUrl){
+                try { URL.revokeObjectURL(currentObjectUrl); } catch(_){}
+                currentObjectUrl = null;
+            }
+
+            if(base64Len < SMALL_THRESHOLD){
+                // Direct data URI assignment (fast, low overhead for small clips)
+                pylipsAudioEl.src = `data:${mime};base64,${msg.audio_data}`;
+            } else {
+                // Large clip: use Blob to avoid huge inline data URI memory
+                const blob = base64ToBlob(msg.audio_data, mime);
+                currentObjectUrl = URL.createObjectURL(blob);
+                pylipsAudioEl.src = currentObjectUrl;
+            }
+
+            pylipsAudioEl.currentTime = 0;
+            // Some TV browsers benefit from explicit load() prior to play
+            try { pylipsAudioEl.load(); } catch(_){}
+
+            const attemptPlay = (label='primary') => {
+                const p = pylipsAudioEl.play();
+                if(p && typeof p.then === 'function'){
+                    p.then(()=>{
+                        console.log('[Audio] Playing (', label, '):', msg.filename);
+                    }).catch(err => {
+                        console.warn('[Audio] Play', label, 'failed:', err);
+                        if(label === 'primary'){
+                            // Retry once after a short delay (TV timing quirk)
+                            setTimeout(()=>{
+                                // For very stubborn cases, reassign src to force a fresh decode
+                                if(base64Len < SMALL_THRESHOLD){
+                                    pylipsAudioEl.src = `data:${mime};base64,${msg.audio_data}`;
+                                } else if(currentObjectUrl){
+                                    pylipsAudioEl.src = currentObjectUrl; // re-use same URL
+                                }
+                                pylipsAudioEl.currentTime = 0;
+                                attemptPlay('retry');
+                            }, 120);
+                        }
+                    });
+                }
+            };
+            attemptPlay();
         });
 
         // Helper function to convert base64 to blob
@@ -104,16 +207,50 @@
             });
         };
 
-        window.getAudioList = function() {
-            socket.emit('request_audio_list');
-        };
-
     </script>
 
 </head>
-<body>
-</body>
-</html>
+<body data-overlay-disabled="{{ 'true' if disable_audio_overlay else 'false' }}">
+    {% if not disable_audio_overlay %}
+    <!-- Audio Unlock Overlay (Removed after first interaction) -->
+    <div id="audio-unlock-overlay">
+        <div class="unlock-card">
+            <h2>Start PyLips</h2>
+            <p id="unlock-hint">Press the button below<br>to enable audio in<br>your web browser.</p>
+            <button id="unlock-btn" type="button" aria-label="Enable audio now">Enable</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <style>
+        #audio-unlock-overlay { position: fixed; inset:0; background: radial-gradient(circle at 30% 30%, rgba(34,34,34,.55) 0%, rgba(0,0,0,.65) 70%); display:flex; align-items:center; justify-content:center; z-index:9999; color:#eee; font-family: system-ui, Arial, sans-serif; backdrop-filter: blur(4px); }
+        #audio-unlock-overlay.fade-out { opacity:0; transition: opacity .35s ease; pointer-events:none; }
+        #audio-unlock-overlay .unlock-card { background:rgba(30,30,30,.85); padding:32px 40px; border:1px solid #444; border-radius:18px; max-width:380px; text-align:center; box-shadow:0 8px 28px -6px rgba(0,0,0,.6), 0 2px 6px -2px rgba(0,0,0,.4); backdrop-filter: blur(8px); }
+        #audio-unlock-overlay h2 { margin:0 0 12px; font-size:1.55rem; letter-spacing:.5px; }
+        #audio-unlock-overlay p { margin:0 0 20px; font-size:.95rem; line-height:1.4; opacity:.9; }
+        #audio-unlock-overlay button { background:#4f8bff; border:none; color:#fff; font-size:.95rem; font-weight:600; padding:12px 26px; border-radius:40px; cursor:pointer; letter-spacing:.5px; box-shadow:0 4px 14px rgba(79,139,255,.4); transition: all .25s ease; }
+        #audio-unlock-overlay button:hover, #audio-unlock-overlay button:focus-visible { background:#256dff; outline:none; box-shadow:0 6px 20px rgba(79,139,255,.55); transform: translateY(-1px); }
+        #audio-unlock-overlay button:active { transform: translateY(0); box-shadow:0 2px 10px rgba(79,139,255,.4); }
+        body.audio-unlocked #audio-unlock-overlay { display:none; }
+        @media (max-width:600px){ #audio-unlock-overlay .unlock-card { margin:0 22px; padding:28px 28px; } }
+    </style>
+
+    <script>
+        // Use a data-flag injected by server instead of Jinja control flow inside JS.
+    // Determine overlay disabled state via body data attribute to avoid inline Jinja in JS.
+    const overlayDisabled = (document.body && document.body.dataset && document.body.dataset.overlayDisabled === 'true');
+        if(!overlayDisabled){
+            const _btn = document.getElementById('unlock-btn');
+            if(_btn){
+                _btn.addEventListener('click', unlockAudio, { once:true });
+                setTimeout(()=>{ try{ _btn.focus(); }catch(e){} }, 50);
+            }
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                unlockAudio();
+            });
+        }
+    </script>
 
 </body>
 </html>
