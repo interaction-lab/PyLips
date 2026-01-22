@@ -314,9 +314,13 @@ function drawBrows(side, params, faceState, ctx) {
     const offsetKey = side === 'L' ? 'eyebrow_left' : 'eyebrow_right';
     const offsets = componentOffsets[offsetKey];
     if (offsets && offsets.length >= 6) {
+        // Calculate face dimensions for normalization
+        const faceWidth = params.eye_separation; // Use eye separation as face width reference
+        const faceHeight = params.brow_height + params.mouth_y + params.mouth_height; // Vertical span from brow to mouth
+        
         for (let i = 0; i < 6; i++) {
-            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
-            points[i] += offsets[i] * scale; // values are normalized to % of canvas width/height
+            const scale = i % 2 == 0 ? faceWidth / 100 : faceHeight / 100;
+            points[i] += offsets[i] * scale; // values are normalized to % of face width/height
         }
     }
     
@@ -393,17 +397,21 @@ function drawMouth(params, faceState, ctx) {
     const upperOffsets = componentOffsets.mouth_upper;
     const lowerOffsets = componentOffsets.mouth_lower;
     
+    // Calculate face dimensions for normalization
+    const faceWidth = params.eye_separation; // Use eye separation as face width reference
+    const faceHeight = params.brow_height + params.mouth_y + params.mouth_height; // Vertical span from brow to mouth
+    
     if (upperOffsets && upperOffsets.length >= 8) {
         for (let i = 0; i < 8; i++) {
-            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
-            upperLipPoints[i] += upperOffsets[i] * scale; // values are normalized to % of canvas width/height
+            const scale = i % 2 == 0 ? faceWidth / 100 : faceHeight / 100;
+            upperLipPoints[i] += upperOffsets[i] * scale; // values are normalized to % of face width/height
         }
     }
     
     if (lowerOffsets && lowerOffsets.length >= 8) {
         for (let i = 0; i < 8; i++) {
-            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
-            lowerLipPoints[i] += lowerOffsets[i] * scale; // values are normalized to % of canvas width/height
+            const scale = i % 2 == 0 ? faceWidth / 100 : faceHeight / 100;
+            lowerLipPoints[i] += lowerOffsets[i] * scale; // values are normalized to % of face width/height
         }
     }
 
