@@ -49,7 +49,7 @@ class RobotFace:
         if tts_method == 'polly':
             self.tts = PollyTTS()
 
-    def say(self, content, wait=False):
+    def say(self, content, wait=False, move_face=True):
         '''
             Issues a speech command to the face.
 
@@ -78,7 +78,8 @@ class RobotFace:
         sound = pygame.mixer.Sound(fname)
 
         #play sound and face
-        self.io.emit('face_control', request)
+        if move_face:
+            self.io.emit('face_control', request)
         pygame.mixer.Channel(self.channel).play(sound)
 
         while wait and pygame.mixer.Channel(self.channel).get_busy():
@@ -99,7 +100,7 @@ class RobotFace:
         self.tts.gen_audio_and_visemes(content, self.voice_id, tag)
          
 
-    def say_file(self, tag):
+    def say_file(self, tag, move_face=True):
         '''
             Plays a speech file that was saved to the disk.
 
@@ -124,11 +125,12 @@ class RobotFace:
         sound = pygame.mixer.Sound(fname)
 
         #play sound and face
-        self.io.emit('face_control', request)
+        if move_face:
+            self.io.emit('face_control', request)
         pygame.mixer.Channel(self.channel).play(sound)
 
 
-    def stream_file_to_browser(self, tag):
+    def stream_file_to_browser(self, tag, move_face=True):
         '''
             Streams an audio file directly to the browser for playback.
             
@@ -157,12 +159,13 @@ class RobotFace:
             'mime_type': 'audio/wav'
         })
 
-        self.io.emit('face_control', {
-            'name': self.name,
-            'action_type': 'say',
-            'visemes': visemes,
-            'times': times,
-        })
+        if move_face:
+            self.io.emit('face_control', {
+                'name': self.name,
+                'action_type': 'say',
+                'visemes': visemes,
+                'times': times,
+            })
 
     def stop_speech(self):
         '''
@@ -270,6 +273,48 @@ class RobotFace:
         }
         self.io.emit('face_control', request)
         time.sleep(.3)
+
+    def set_component_offsets(self, offsets, time=0):
+        '''
+        Sets direct displacement offsets for face component control points.
+
+        This method allows you to directly control the position of eyebrow and mouth control
+        points by providing displacement vectors. The offsets are applied on top of the
+        default positions and any Action Unit-based adjustments.
+
+        Args:
+            offsets (dict): A dictionary containing component offsets. Valid keys:
+                - 'eyebrow_left' (list): 6-element list [x1, y1, x2, y2, x3, y3] for left eyebrow
+                  (inner, middle, outer point displacements)
+                - 'eyebrow_right' (list): 6-element list [x1, y1, x2, y2, x3, y3] for right eyebrow
+                  (inner, middle, outer point displacements)
+                - 'mouth_upper' (list): 8-element list [x1, y1, x2, y2, x3, y3, x4, y4] for upper lip
+                  (left corner, left control, right control, right corner displacements)
+                - 'mouth_lower' (list): 8-element list [x1, y1, x2, y2, x3, y3, x4, y4] for lower lip
+                  (left corner, left control, right control, right corner displacements)
+            time (int, optional): The time in milliseconds to interpolate to the new offsets.
+                If 0 (default), offsets are applied immediately. If > 0, offsets will smoothly
+                transition from current values to target values over the specified duration.
+
+        Example:
+            # Immediate application
+            face.set_component_offsets({
+                'eyebrow_left': [0, -10, 0, -5, 0, 0],  # Raise left eyebrow
+                'mouth_upper': [0, 0, 0, 5, 0, 5, 0, 0]  # Smile with upper lip
+            })
+            
+            # Smooth transition over 500ms
+            face.set_component_offsets({
+                'eyebrow_left': [0, -10, 0, -5, 0, 0]
+            }, time=500)
+        '''
+        request = {
+            'name': self.name,
+            'action_type': 'set_component_offsets',
+            'offsets': offsets,
+            'time': time
+        }
+        self.io.emit('face_control', request)
 
     def wait(self):
         '''

@@ -57,6 +57,11 @@
                 });
             }
 
+            if(msg.action_type == 'set_component_offsets'){
+                const time = msg.time || 0;
+                setComponentOffsets(msg.offsets, time);
+            }
+
         });
 
         // Handle audio playback from server

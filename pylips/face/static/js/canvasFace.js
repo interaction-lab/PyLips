@@ -1,5 +1,7 @@
 // Track active interpolation goals for each action unit
 const activeGoals = {};
+// Track active interpolation goals for component offsets
+const activeOffsetGoals = {};
 var looking = false
 
 // Face parameters
@@ -91,6 +93,14 @@ const faceState = {
     lookAtZ: 2000
 };
 
+// Component offsets for direct control point displacement
+const componentOffsets = {
+    eyebrow_left: [0, 0, 0, 0, 0, 0],  // [x1, y1, x2, y2, x3, y3] for inner, middle, outer
+    eyebrow_right: [0, 0, 0, 0, 0, 0],  // [x1, y1, x2, y2, x3, y3] for inner, middle, outer
+    mouth_upper: [0, 0, 0, 0, 0, 0, 0, 0],  // [x1, y1, x2, y2, x3, y3, x4, y4] for left corner, left control, right control, right corner
+    mouth_lower: [0, 0, 0, 0, 0, 0, 0, 0]   // [x1, y1, x2, y2, x3, y3, x4, y4] for left corner, left control, right control, right corner
+};
+
 
 /*
 
@@ -173,73 +183,6 @@ function interpolateSpline(ctx, points, thickness, color) {
 }
 
 
-// function interpolateSpline2(ctx, points, thickness, color) {
-//     ctx.strokeStyle = color;
-//     ctx.lineWidth = thickness;
-//     ctx.lineCap = 'round'; // Set the line cap style to round
-
-//     // Validate the input
-//     if (points.length !== 6 && points.length !== 8) {
-//         throw new Error("Invalid number of points: use either 3 points (6 values) or 4 points (8 values)");
-//     }
-
-//     const numPoints = points.length / 2;
-
-//     // Begin the path
-//     ctx.beginPath();
-
-//     // Loop through control points
-//     for (let i = 0; i < numPoints - 1; i++) {
-//         const p0 = [points[i * 2], points[i * 2 + 1]]; // Point i
-//         const p1 = [points[(i + 1) * 2], points[(i + 1) * 2 + 1]]; // Point i+1
-
-//         // Calculate tangents for p0 and p1
-//         let tangent0, tangent1;
-
-//         if (i === 0) {
-//             // For the first point, average with the next point
-//             tangent0 = [(p1[0] - p0[0]) / 2, (p1[1] - p0[1]) / 2];
-//             tangent0 = [0, 0]
-//         } else {
-//             tangent0 = [(p1[0] - points[(i - 1) * 2]) / 2, (p1[1] - points[(i - 1) * 2 + 1]) / 2];
-//         }
-
-//         if (i === numPoints - 2) {
-//             // For the last point, average with the previous point
-//             tangent1 = [(p1[0] - p0[0]) / 2, (p1[1] - p0[1]) / 2];
-//             tangent1 = [0, 0]
-//         } else {
-//             tangent1 = [(points[(i + 2) * 2] - p0[0]) / 2, (points[(i + 2) * 2 + 1] - p0[1]) / 2];
-//         }
-
-//         // Draw the Hermite curve segment
-//         const steps = 16; // Number of interpolation steps
-//         for (let t = 0; t <= 1; t += 1 / steps) {
-//             const t2 = t * t;
-//             const t3 = t2 * t;
-
-//             // Cubic Hermite spline formula
-//             const x = (2 * t3 - 3 * t2 + 1) * p0[0] +
-//                 (t3 - 2 * t2 + t) * tangent0[0] +
-//                 (-2 * t3 + 3 * t2) * p1[0] +
-//                 (t3 - t2) * tangent1[0];
-
-//             const y = (2 * t3 - 3 * t2 + 1) * p0[1] +
-//                 (t3 - 2 * t2 + t) * tangent0[1] +
-//                 (-2 * t3 + 3 * t2) * p1[1] +
-//                 (t3 - t2) * tangent1[1];
-
-//             if (t === 0) {
-//                 ctx.moveTo(x, y); // Move to the first point
-//             } else {
-//                 ctx.lineTo(x, y);
-//             }
-//         }
-//     }
-
-//     // Stroke the path
-//     ctx.stroke();
-// }
 
 
 
@@ -366,6 +309,17 @@ function drawBrows(side, params, faceState, ctx) {
     points[3] -= 2 * params.brow_thickness * (.05 * faceState[`AU1${side}`] + .7 * faceState[`AU2${side}`] - .4 * faceState[`AU4${side}`]);
     points[4] -= .05 * params.eye_separation * dir * (-.7 * faceState[`AU2${side}`]);
     points[5] -= 2 * params.brow_thickness * (.6 * faceState[`AU2${side}`]);
+    
+    // Apply direct component offsets
+    const offsetKey = side === 'L' ? 'eyebrow_left' : 'eyebrow_right';
+    const offsets = componentOffsets[offsetKey];
+    if (offsets && offsets.length >= 6) {
+        for (let i = 0; i < 6; i++) {
+            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
+            points[i] += offsets[i] * scale; // values are normalized to % of canvas width/height
+        }
+    }
+    
     // Draw the brow
     interpolateSpline(ctx, points, params.brow_thickness, params.brow_color);
 }
@@ -434,6 +388,24 @@ function drawMouth(params, faceState, ctx) {
     lowerLipPoints[3] += max_down_dist * (0.4 * faceState.AU25L + 0.7 * faceState.AU26L + 1.6 * faceState.AU27L - 0.55 * faceState.AU10L + 0.2 * faceState.AU16L - 0.45 * faceState.AU17L) / 2.2;
     lowerLipPoints[4] -= max_x_variation * (-0.25 * faceState.AU14R - 0.5 * faceState.AU16R - 0.2 * faceState.AU26R + 0.3 * faceState.AU18R - 0.25 * faceState.AU20R + 0.15 * faceState.AU23R) / 1.05;
     lowerLipPoints[5] += max_down_dist * (0.4 * faceState.AU25R + 0.7 * faceState.AU26R + 1.6 * faceState.AU27R - 0.55 * faceState.AU10R + 0.2 * faceState.AU16R - 0.45 * faceState.AU17R) / 2.2;
+
+    // Apply direct component offsets for mouth
+    const upperOffsets = componentOffsets.mouth_upper;
+    const lowerOffsets = componentOffsets.mouth_lower;
+    
+    if (upperOffsets && upperOffsets.length >= 8) {
+        for (let i = 0; i < 8; i++) {
+            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
+            upperLipPoints[i] += upperOffsets[i] * scale; // values are normalized to % of canvas width/height
+        }
+    }
+    
+    if (lowerOffsets && lowerOffsets.length >= 8) {
+        for (let i = 0; i < 8; i++) {
+            scale = i%2 == 0 ? params.canvas_width / 100 : params.canvas_height / 100;
+            lowerLipPoints[i] += lowerOffsets[i] * scale; // values are normalized to % of canvas width/height
+        }
+    }
 
     // Draw the lips
     interpolateSpline(ctx, upperLipPoints, params.mouth_thickness, params.mouth_color);
@@ -570,6 +542,25 @@ function updateFaceState(canvas) {
         }
     }
 
+    // Interpolate component offsets
+    for (const [componentKey, { initialValues, targetValues, duration, startTime }] of Object.entries(activeOffsetGoals)) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const easedT = easeInOutCubic(t);
+
+        // Interpolate each value in the array
+        const currentValues = initialValues.map((initial, index) => {
+            return initial + (targetValues[index] - initial) * easedT;
+        });
+
+        componentOffsets[componentKey] = currentValues;
+
+        // Remove the goal once the duration is complete
+        if (t >= 1) {
+            delete activeOffsetGoals[componentKey];
+        }
+    }
+
     // Redraw the face with the updated state
     draw_face(params, faceState, canvas);
 
@@ -611,6 +602,77 @@ function lookat(x, y, z, time) {
         lookAtY: { targetValue: y, duration: time },
         lookAtZ: { targetValue: z, duration: time }
     });
+}
+
+function interpolateComponentOffsets(newGoals) {
+    /**
+     * Interpolates component offsets over time.
+     * 
+     * @param {Object} newGoals - Dictionary mapping component keys to { targetValues, duration }
+     */
+    for (const [componentKey, { targetValues, duration }] of Object.entries(newGoals)) {
+        const initialValues = componentOffsets[componentKey] ? [...componentOffsets[componentKey]] : 
+            (componentKey.includes('eyebrow') ? [0, 0, 0, 0, 0, 0] : [0, 0, 0, 0, 0, 0, 0, 0]);
+        
+        activeOffsetGoals[componentKey] = {
+            initialValues: initialValues,
+            targetValues: targetValues,
+            duration: duration,
+            startTime: performance.now()
+        };
+    }
+}
+
+function setComponentOffsets(offsets, time = 0) {
+    /**
+     * Sets direct displacement offsets for face component control points.
+     * 
+     * @param {Object} offsets - Dictionary containing component offsets:
+     *   - eyebrow_left: [x1, y1, x2, y2, x3, y3] for left eyebrow (inner, middle, outer)
+     *   - eyebrow_right: [x1, y1, x2, y2, x3, y3] for right eyebrow (inner, middle, outer)
+     *   - mouth_upper: [x1, y1, x2, y2, x3, y3, x4, y4] for upper lip (left corner, left control, right control, right corner)
+     *   - mouth_lower: [x1, y1, x2, y2, x3, y3, x4, y4] for lower lip (left corner, left control, right control, right corner)
+     * @param {number} time - Time in milliseconds to interpolate (0 for immediate)
+     */
+    const interpolationGoals = {};
+    
+    if (offsets.eyebrow_left && Array.isArray(offsets.eyebrow_left) && offsets.eyebrow_left.length >= 6) {
+        const targetValues = offsets.eyebrow_left.slice(0, 6);
+        if (time > 0) {
+            interpolationGoals.eyebrow_left = { targetValues, duration: time };
+        } else {
+            componentOffsets.eyebrow_left = targetValues;
+        }
+    }
+    if (offsets.eyebrow_right && Array.isArray(offsets.eyebrow_right) && offsets.eyebrow_right.length >= 6) {
+        const targetValues = offsets.eyebrow_right.slice(0, 6);
+        if (time > 0) {
+            interpolationGoals.eyebrow_right = { targetValues, duration: time };
+        } else {
+            componentOffsets.eyebrow_right = targetValues;
+        }
+    }
+    if (offsets.mouth_upper && Array.isArray(offsets.mouth_upper) && offsets.mouth_upper.length >= 8) {
+        const targetValues = offsets.mouth_upper.slice(0, 8);
+        if (time > 0) {
+            interpolationGoals.mouth_upper = { targetValues, duration: time };
+        } else {
+            componentOffsets.mouth_upper = targetValues;
+        }
+    }
+    if (offsets.mouth_lower && Array.isArray(offsets.mouth_lower) && offsets.mouth_lower.length >= 8) {
+        const targetValues = offsets.mouth_lower.slice(0, 8);
+        if (time > 0) {
+            interpolationGoals.mouth_lower = { targetValues, duration: time };
+        } else {
+            componentOffsets.mouth_lower = targetValues;
+        }
+    }
+    
+    // Start interpolation if there are any goals
+    if (Object.keys(interpolationGoals).length > 0) {
+        interpolateComponentOffsets(interpolationGoals);
+    }
 }
 
 
