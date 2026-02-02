@@ -36,3 +36,4 @@ video_demo/
 uist_demo/
 tutorials/face_landmarker_v2_with_blendshapes.task 
 tests/test_*
+speech/test_*

@@ -284,6 +284,7 @@ class RobotFace:
 
         Args:
             offsets (dict): A dictionary containing component offsets. Valid keys:
+
                 - 'eyebrow_left' (list): 6-element list [x1, y1, x2, y2, x3, y3] for left eyebrow
                   (inner, middle, outer point displacements)
                 - 'eyebrow_right' (list): 6-element list [x1, y1, x2, y2, x3, y3] for right eyebrow
@@ -297,6 +298,7 @@ class RobotFace:
                 transition from current values to target values over the specified duration.
 
         Example:
+        ```
             # Immediate application
             face.set_component_offsets({
                 'eyebrow_left': [0, -10, 0, -5, 0, 0],  # Raise left eyebrow
@@ -307,6 +309,7 @@ class RobotFace:
             face.set_component_offsets({
                 'eyebrow_left': [0, -10, 0, -5, 0, 0]
             }, time=500)
+        ```
         '''
         request = {
             'name': self.name,
